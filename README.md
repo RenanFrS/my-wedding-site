@@ -4,7 +4,8 @@ Este é o site do nosso casamento, um espaço para compartilhar com vocês todos
 Sobre nós
 Nossa história começou há 1 Ano e desde então, construímos um relacionamento cheio de amor, companheirismo e alegria. Decidimos oficializar nossa união e celebrar esse momento com as pessoas que mais amamos.
 
-<img src="assets/gif/gifrenanheloisa.gif" width="1000" height="1000">
+ 
+ ![Animação do nosso casamento](assets/gif/gifrenanheloisa.gif)
 
 Com amor,
 
