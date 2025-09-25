@@ -1,1 +1,1 @@
-self.__RSC_SERVER_MANIFEST="{\n  \"node\": {},\n  \"edge\": {},\n  \"encryptionKey\": \"process.env.NEXT_SERVER_ACTIONS_ENCRYPTION_KEY\"\n}"
+self.__RSC_SERVER_MANIFEST="{\"node\":{\"4007592ece3d1ba518858e0b74ba95b90808179478\":{\"workers\":{\"app/login/page\":{\"moduleId\":\"1047\",\"async\":false}},\"layer\":{\"app/login/page\":\"rsc\"},\"filename\":\"../A:\\\\Projetos\\\\wedding-renan-heloisa\\\\src\\\\app\\\\login\\\\page.jsx\",\"exportedName\":\"$$RSC_SERVER_ACTION_0\"}},\"edge\":{},\"encryptionKey\":\"process.env.NEXT_SERVER_ACTIONS_ENCRYPTION_KEY\"}"

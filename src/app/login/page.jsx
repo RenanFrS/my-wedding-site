@@ -2,7 +2,7 @@ import React from "react";
 import { credentialsAreValid, signSession } from "../../lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Input } from "../components/ui/input";
+import { Input } from "../../components/ui/input";
 
 export const dynamic = "force-static";
 
