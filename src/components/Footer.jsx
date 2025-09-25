@@ -1,0 +1,40 @@
+"use client";
+import React from "react";
+
+export default function Footer() {
+  return (
+    <footer className="mt-16 md:mt-[20vh] w-full bg-olive py-12 md:py-[10vh] px-6 md:px-[30px] text-center shadow-inner rounded-lg">
+      <div className="max-w-[800px] mx-auto">
+        <h2 className="title text-2xl md:text-[2.5rem] italic mb-8 font-normal">
+          Com amor e Carinho
+        </h2>
+        <div className="flex flex-col items-center mb-8">
+          <h2 className="name text-xl md:text-[2rem] font-medium my-2 tracking-wide">
+            Renan França Rocha da Silva
+          </h2>
+          <div className="ampersand text-[2.5rem] italic my-2">&</div>
+          <h2 className="name text-xl md:text-[2rem] font-medium my-2 tracking-wide">
+            Heloisa Galindo da Silva
+          </h2>
+        </div>
+        <div className="heart-divider flex items-center justify-center my-6 w-full">
+          <span className="left-line h-px w-[60px] md:w-[100px] bg-[#33290a]"></span>
+          <i className="heart-icon text-[1.8rem] mx-[15px]">♥</i>
+          <span className="right-line h-px w-[60px] md:w-[100px] bg-[#33290a]"></span>
+        </div>
+        <div className="copyright mt-8 text-sm opacity-80">
+          <p>
+            © 2025: Renan e Heloisa, Desenvolvido por:{" "}
+            <a
+              href="http://instagram.com/renanrocha.01/"
+              className="text-[#ac5b30] font-medium border-b border-dotted"
+              target="_blank"
+            >
+              Renan Rocha
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}

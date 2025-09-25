@@ -1,15 +1,22 @@
-Bem-vindos ao nosso cantinho virtual!
-Este é o site do nosso casamento, um espaço para compartilhar com vocês todos os detalhes desse momento tão especial em nossas vidas. Aqui, vocês encontrarão informações sobre o local, data, horário, lista de presentes e muito mais.
+# Site de Casamento – Renan & Heloisa
 
-Sobre nós
-Nossa história começou há 1 Ano e desde então, construímos um relacionamento cheio de amor, companheirismo e alegria. Decidimos oficializar nossa união e celebrar esse momento com as pessoas que mais amamos.
+Bem-vindos ao nosso cantinho virtual!  
+Este é o site do nosso casamento, criado para compartilhar todos os detalhes desse momento especial. Aqui você encontrará informações sobre local, data, horário, lista de presentes e outras novidades.
 
- 
- ![Animação do nosso casamento](assets/gif/gifrenanheloisa.gif)
+## Sobre nós
 
-Com amor,
+Nossa história começou há 1 ano. Desde então, temos construído uma relação baseada em amor, companheirismo e alegria. Agora, decidimos oficializar nossa união e celebrar ao lado das pessoas mais importantes para nós.
 
-Renan e Heloisa
+![Animação do nosso casamento](public/gif/gifrenanheloisa.gif)
 
-Créditos
-Este projeto foi desenvolvido por Renan e Heloisa para uso pessoal em seu casamento. Caso você utilize este modelo para o seu próprio site de casamento, por favor, nos dê os créditos mencionando nosso nome e/ou link para este repositório. Agradecemos a compreensão!
+## Desenvolvimento e recursos
+
+O projeto está em constante evolução.
+Durante alguns meses atualizei o projeto que estava simples somente com html, js e css.
+transformando o projeto com React, NextJS, Shadcn mudando o layout, ainda falta alguns detalhes.  
+Atualmente, estou trabalhando na **integração com o n8n** e com **postgres** para automatizar o controle de convidados e tornar a experiência mais interativa.
+
+## Créditos
+
+Este site foi desenvolvido por Renan e Heloisa para uso pessoal em seu casamento.  
+Se você reutilizar este modelo, mencione nossos nomes e/ou adicione um link para este repositório. Agradecemos a compreensão!
