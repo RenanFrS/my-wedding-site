@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifySession as verifySessionEdge } from "./src/lib/edge-auth";
+import { verifySession as verifySessionEdge } from "./src/lib/auth";
 
 const ADMIN_PATH = "/admin";
 
