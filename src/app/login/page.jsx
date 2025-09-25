@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Input } from "../../components/ui/input";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 async function authenticate(formData) {
   "use server";
