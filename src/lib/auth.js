@@ -1,21 +1,33 @@
-import crypto from "crypto";
-
 const SECRET = process.env.ADMIN_SECRET || "dev-secret-change";
 
-export function signSession(payload) {
+async function hmacSha256Hex(keyStr, dataStr) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(keyStr),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign", "verify"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(dataStr));
+  const bytes = new Uint8Array(sig);
+  let hex = "";
+  for (let i = 0; i < bytes.length; i++)
+    hex += bytes[i].toString(16).padStart(2, "0");
+  return hex;
+}
+
+export async function signSession(payload) {
   const data = JSON.stringify(payload);
-  const sig = crypto.createHmac("sha256", SECRET).update(data).digest("hex");
+  const sig = await hmacSha256Hex(SECRET, data);
   return Buffer.from(`${data}|${sig}`).toString("base64url");
 }
 
-export function verifySession(token) {
+export async function verifySession(token) {
   try {
     const raw = Buffer.from(token, "base64url").toString();
     const [data, sig] = raw.split("|");
-    const expected = crypto
-      .createHmac("sha256", SECRET)
-      .update(data)
-      .digest("hex");
+    const expected = await hmacSha256Hex(SECRET, data);
     if (sig !== expected) return null;
     return JSON.parse(data);
   } catch {

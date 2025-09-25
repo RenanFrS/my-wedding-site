@@ -11,7 +11,7 @@ async function authenticate(formData) {
   const user = formData.get("user");
   const pass = formData.get("pass");
   if (credentialsAreValid(user, pass)) {
-    const token = signSession({ u: user, t: Date.now() });
+    const token = await signSession({ u: user, t: Date.now() });
     cookies().set("admin_session", token, {
       httpOnly: true,
       sameSite: "lax",
