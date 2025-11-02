@@ -2,13 +2,29 @@
 import * as React from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva } from "class-variance-authority";
-import { X } from "lucide-react";
+import { X, Menu } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 
 const Sheet = SheetPrimitive.Root;
 
-const SheetTrigger = SheetPrimitive.Trigger;
+// Mobile-only hamburger trigger: hidden on md and larger screens
+const SheetTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
+  <SheetPrimitive.Trigger asChild {...props} ref={ref}>
+    <button
+      type="button"
+      className={cn(
+        "inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 md:hidden",
+        className
+      )}
+      aria-label="Open menu"
+    >
+      <Menu className="h-6 w-6" />
+      {children}
+    </button>
+  </SheetPrimitive.Trigger>
+));
+SheetTrigger.displayName = "SheetTrigger";
 
 const SheetClose = SheetPrimitive.Close;
 
@@ -17,7 +33,8 @@ const SheetPortal = SheetPrimitive.Portal;
 const SheetOverlay = React.forwardRef(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      // Only show overlay on small screens (mobile). Hide on md and larger.
+      "fixed inset-0 z-50 bg-black/60 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 md:hidden",
       className
     )}
     {...props}
@@ -27,7 +44,8 @@ const SheetOverlay = React.forwardRef(({ className, ...props }, ref) => (
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  // z-index above navbar; hide on >= md (desktop/tablet wider)
+  "fixed z-[90] gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 md:hidden",
   {
     variants: {
       side: {
@@ -35,8 +53,9 @@ const sheetVariants = cva(
         bottom:
           "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
         left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+        // On mobile (default) make right sheet full width and slide in from right (RTL behavior)
         right:
-          "inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+          "inset-y-0 right-0 h-full w-full max-w-none border-l will-change-transform transform-gpu data-[state=closed]:translate-x-full data-[state=open]:translate-x-0 data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:w-3/4 sm:max-w-sm",
       },
     },
     defaultVariants: {
@@ -51,12 +70,21 @@ const SheetContent = React.forwardRef(
       <SheetOverlay />
       <SheetPrimitive.Content
         ref={ref}
-        className={cn(sheetVariants({ side }), className)}
+        className={cn(
+          sheetVariants({ side }),
+          // make content scrollable on mobile if tall
+          "overflow-y-auto",
+          className
+        )}
         {...props}
       >
         {children}
-        <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-          <X className="h-4 w-4" />
+        <SheetPrimitive.Close
+          className={cn(
+            "absolute right-4 top-4 rounded-sm p-2 opacity-80 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+          )}
+        >
+          <X className="h-5 w-5" />
           <span className="sr-only">Close</span>
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>

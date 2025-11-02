@@ -71,8 +71,41 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    /* Default to Migra for paragraphs and subtitles */
+    @apply bg-background text-foreground font-sans;
   }
+}
+
+/* Local fonts: place files under public/fonts/Amoresa and public/fonts/Migra */
+@font-face {
+  font-family: "Amoresa";
+  src:
+    local("Amoresa"),
+    url("/fonts/Amoresa/Amoresa-Regular.woff2") format("woff2"),
+    url("/fonts/Amoresa/Amoresa-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Migra";
+  src:
+    local("Migra"),
+    url("/fonts/Migra/Migra-Regular.woff2") format("woff2"),
+    url("/fonts/Migra/Migra-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Migra";
+  src:
+    local("Migra-Bold"),
+    url("/fonts/Migra/Migra-Bold.woff2") format("woff2"),
+    url("/fonts/Migra/Migra-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 .hz-margin {
   padding-left: var(--horizontal-margin-spacing);
@@ -112,4 +145,11 @@
   .cerimonia-watermark {
     opacity: 0.08 !important;
   }
+}
+
+/* Utility for Amoresa display titles */
+.font-amoresa {
+  font-family: "Amoresa", serif;
+  font-feature-settings: "liga" 1, "clig" 1;
+  font-variant-ligatures: common-ligatures;
 }

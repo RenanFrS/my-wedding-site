@@ -68,10 +68,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Great Vibes", "cursive"],
-        mono: ["JetBrains Mono", "monospace"],
-        serif: ["Cinzel", "serif"],
-        sans: ["Quicksand", "sans-serif"],
+        amoresa: ["Amoresa", "serif"],
+        migra: ["Migra", "system-ui", "serif"],
+        sans: ["Migra", "system-ui", "sans-serif"],
       },
     },
   },

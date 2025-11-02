@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Sheet, SheetTrigger, SheetContent, SheetClose } from "./ui/sheet";
+import StaggeredMenu from "./ui/StaggeredMenu";
 import { useScrollSpy } from "./hooks/useScrollSpy";
 
 // Updated sections for scroll spy
@@ -31,20 +31,20 @@ export default function Navbar() {
         <div className="flex items-center gap-3 md:gap-4">
           <a href="#inicio" aria-label="Ir para o topo" className="block">
             <Image
-              src="/logo/monograma.png"
+              src="/logo/monograma.svg"
               alt="Monograma Renan e Heloisa"
-              width={50}
-              height={50}
-              className="w-50 h-50 md:w-50 md:h-50 object-contain"
+              width={80}
+              height={80}
+              className="object-contain"
               sizes="(min-width: 768px) 56px, 48px"
               priority
             />
           </a>
-          <div className="leading-tight">
-            <div className="font-display text-2xl md:text-3xl font-normal tracking-tight leading-none">
+          <div className="leading-tight min-w-[200px] md:min-w-[230px]">
+            <div className="font-amoresa text-2xl md:text-2xl font-normal tracking-wide leading-none text-justify">
               Renan & Heloisa
             </div>
-            <div className="text-[10px] md:text-xs font-sans uppercase tracking-[0.15em] md:tracking-[0.25em]">
+            <div className="text-sm md:text-xs font-sans uppercase tracking-[0.15em] md:tracking-[0.25em] text-justify">
               06 de Setembro de 2026
             </div>
           </div>
@@ -75,35 +75,22 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Mobile menu */}
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger
-              className="text-2xl px-3 py-2"
-              aria-label="Abrir menu"
-            >
-              ☰
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-white/90 backdrop-blur">
-              <ul className="text font-sans uppercase text-center font-bold mt-10 space-y-4">
-                {[
-                  { id: "inicio", label: "Início" },
-                  { id: "o-casal", label: "O Casal" },
-                  { id: "cerimonia", label: "Cerimônia" },
-                  { id: "confirmacao", label: "Confirmação" },
-                  { id: "presentes", label: "Presentes" },
-                ].map((link) => (
-                  <li key={link.id}>
-                    <SheetClose asChild>
-                      <a href={`#${link.id}`} className="block px-3 py-2">
-                        {link.label}
-                      </a>
-                    </SheetClose>
-                  </li>
-                ))}
-              </ul>
-            </SheetContent>
-          </Sheet>
+        {/* Mobile menu: StaggeredMenu (Sheet-backed) */}
+        <div className="md:hidden flex items-center justify-end flex-shrink-0">
+          <StaggeredMenu
+            className="inline-flex"
+            position="right"
+            items={[
+              { label: "Início", link: "#inicio", ariaLabel: "Ir para Início" },
+              { label: "O Casal", link: "#o-casal", ariaLabel: "Ir para O Casal" },
+              { label: "Cerimônia", link: "#cerimonia", ariaLabel: "Ir para Cerimônia" },
+              { label: "Confirmação", link: "#confirmacao", ariaLabel: "Ir para Confirmação" },
+              { label: "Presentes", link: "#presentes", ariaLabel: "Ir para Presentes" },
+            ]}
+            menuButtonColor={scrolled ? "#6d4635" : "#ffffff"}
+            openMenuButtonColor="#6d4635"
+            changeMenuColorOnOpen
+          />
         </div>
       </div>
     </nav>

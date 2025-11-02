@@ -6,7 +6,7 @@ import Hero from "../components/Hero";
 import Timeline from "../components/Timeline";
 import FlowerDividerMain from "../components/dividers/FlowerDividerMain";
 import Story from "../components/Story";
-import GalleryMasonry from "../components/Masonry";
+import Skiper30 from "../components/Skiper30";
 import Quote from "../components/Quote";
 import Hands from "../components/Hands";
 import Stay from "../components/Stay";
@@ -35,7 +35,7 @@ export default function Page() {
           <section id="o-casal">
             <Story />
           </section>
-          <GalleryMasonry />
+          <Skiper30 />
           <Quote />
           <Hands />
           <section id="cerimonia">

@@ -44,8 +44,8 @@ export default function Hero() {
 
       {/* Bottom-centered content */}
       <div className="absolute inset-x-0 bottom-10 flex flex-col items-center text-center text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)] px-4 z-30">
-        <h1 className="text-4xl md:text-7xl font-medium font-display tracking-tight">
-          Renan &<span className="block">Heloisa</span>
+        <h1 className="text-4xl md:text-7xl font-normal font-amoresa tracking-tight">
+          Renan &<span className="block mt-5">Heloisa</span>
         </h1>
         <p className="mt-2 text-sm md:text-lg tracking-[0.15em] md:tracking-[0.25em] uppercase">
           06 de Setembro de 2026
