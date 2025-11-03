@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-br">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="shortcut icon" href="/logo/favicon.ico" />
+        <link rel="shortcut icon" href="/logo/favicon.jpg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
