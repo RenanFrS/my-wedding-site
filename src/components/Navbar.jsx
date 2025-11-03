@@ -40,11 +40,11 @@ export default function Navbar() {
               priority
             />
           </a>
-          <div className="leading-tight min-w-[200px] md:min-w-[230px]">
-            <div className="font-amoresa text-2xl md:text-2xl font-normal tracking-wide leading-none text-justify">
+          <div className="leading-tight flex flex-col items-end">
+            <div className="font-amoresa text-lg md:text-2xl font-normal tracking-wide leading-none">
               Renan & Heloisa
             </div>
-            <div className="text-sm md:text-xs font-sans uppercase tracking-[0.15em] md:tracking-[0.25em] text-justify">
+            <div className="text-[10px] md:text-xs font-sans uppercase tracking-[0.2em] md:tracking-[0.25em]">
               06 de Setembro de 2026
             </div>
           </div>
