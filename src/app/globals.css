@@ -80,9 +80,7 @@
 @font-face {
   font-family: "Amoresa";
   src:
-    local("Amoresa"),
-    url("/fonts/Amoresa/Amoresa-Regular.woff2") format("woff2"),
-    url("/fonts/Amoresa/Amoresa-Regular.woff") format("woff");
+    url("/fonts/Amoresa/Amoresa.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -90,9 +88,17 @@
 @font-face {
   font-family: "Migra";
   src:
-    local("Migra"),
-    url("/fonts/Migra/Migra-Regular.woff2") format("woff2"),
-    url("/fonts/Migra/Migra-Regular.woff") format("woff");
+    url("/fonts/Migra/Migra-Extralight.woff2") format("woff2"),
+    url("/fonts/Migra/Migra-Extralight.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Migra";
+  src:
+    url("/fonts/Migra/Migra-Extralight.woff2") format("woff2"),
+    url("/fonts/Migra/Migra-Extralight.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -100,9 +106,8 @@
 @font-face {
   font-family: "Migra";
   src:
-    local("Migra-Bold"),
-    url("/fonts/Migra/Migra-Bold.woff2") format("woff2"),
-    url("/fonts/Migra/Migra-Bold.woff") format("woff");
+    url("/fonts/Migra/Migra-Extralight.woff2") format("woff2"),
+    url("/fonts/Migra/Migra-Extralight.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
