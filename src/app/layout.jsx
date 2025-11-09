@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Renan & Helô",
-  description: "Site do casamento de Renan e Heloisa",
+  description: "Site de casamento de Renan e Heloisa",
 };
 
 export default function RootLayout({ children }) {
