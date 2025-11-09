@@ -70,7 +70,8 @@ export default {
       fontFamily: {
         amoresa: ["Amoresa", "serif"],
         migra: ["Migra", "system-ui", "serif"],
-        sans: ["Migra", "system-ui", "sans-serif"],
+        serif: ["Source Serif Pro", "Georgia", "serif"],
+        sans: ["Source Serif Pro", "Georgia", "serif"],
       },
     },
   },

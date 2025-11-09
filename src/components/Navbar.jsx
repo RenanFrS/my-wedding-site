@@ -10,9 +10,37 @@ const sections = ["inicio", "o-casal", "cerimonia", "confirmacao", "presentes"];
 export default function Navbar() {
   const active = useScrollSpy(sections);
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true); // Começa visível
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 8);
+      
+      // Mostrar navbar no topo (Hero) e depois do Timeline
+      const timeline = document.getElementById("timeline");
+      
+      if (timeline) {
+        const rect = timeline.getBoundingClientRect();
+        const heroHeight = window.innerHeight; // Altura aproximada do Hero
+        
+        // Visível no Hero (primeiros pixels) OU quando chegar no Timeline
+        if (scrollY < 50) {
+          // Início da página - navbar visível
+          setVisible(true);
+        } else if (scrollY < heroHeight - 100) {
+          // Durante o Hero - navbar some gradualmente
+          setVisible(false);
+        } else if (rect.top <= 100) {
+          // Quando chega no Timeline - navbar aparece
+          setVisible(true);
+        } else {
+          // Entre Hero e Timeline - navbar escondido
+          setVisible(false);
+        }
+      }
+    };
+    
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -20,7 +48,9 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors ${
+      className={`fixed left-0 right-0 z-50 transition-all duration-700 ease-out ${
+        visible ? "top-0 opacity-100" : "-top-24 opacity-0"
+      } ${
         scrolled
           ? "bg-white/80 backdrop-blur border-b border-black/5"
           : "bg-transparent"
@@ -44,7 +74,7 @@ export default function Navbar() {
             <div className="font-amoresa text-lg md:text-2xl font-normal tracking-wide leading-none">
               Renan & Heloisa
             </div>
-            <div className="text-[10px] md:text-xs font-sans uppercase tracking-[0.2em] md:tracking-[0.25em]">
+            <div className="text-[10px] md:text-xs font-migra uppercase tracking-[0.2em] md:tracking-[0.25em]">
               06 de Setembro de 2026
             </div>
           </div>

@@ -32,7 +32,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative h-screen w-full z-10">
+    <section id="hero" className="relative h-screen w-full z-10 overflow-hidden">
       {/* Background image */}
       <div
         ref={bgRef}
@@ -40,14 +40,14 @@ export default function Hero() {
         style={{ backgroundImage: "url(/imagens/1.jpg)" }}
       />
       {/* Softer white gradient at the bottom to gently blend with the photo */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 md:h-40 bg-gradient-to-t from-[#fefaf6]/80 via-[#fefaf6]/30 to-transparent z-20" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 md:h-80 bg-gradient-to-t from-[#fefaf6] via-[#fefaf6]/80 to-transparent z-20" />
 
       {/* Bottom-centered content */}
       <div className="absolute inset-x-0 bottom-10 flex flex-col items-center text-center text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)] px-4 z-30">
         <h1 className="text-4xl md:text-7xl font-normal font-amoresa tracking-tight">
           Renan &<span className="block mt-5">Heloisa</span>
         </h1>
-        <p className="mt-2 text-sm md:text-lg tracking-[0.15em] md:tracking-[0.25em] uppercase">
+        <p className="mt-2 text-sm md:text-lg tracking-[0.15em] md:tracking-[0.25em] uppercase font-migra">
           06 de Setembro de 2026
         </p>
         <button

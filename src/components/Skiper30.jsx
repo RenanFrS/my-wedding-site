@@ -129,11 +129,11 @@ const Skiper30 = () => {
 
   return (
     <section id="galeria" className="w-full bg-white">
-      <div className="hz-margin py-24 md:py-40">
+      {/* <div className="hz-margin py-24 md:py-40">
         <h2 className="text-center font-display text-4xl md:text-5xl mb-10 text-[#ac5b30]">
           Nossa Galeria
         </h2>
-      </div>
+      </div> */}
 
       {/* Gallery */}
       <div

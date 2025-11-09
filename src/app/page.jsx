@@ -23,18 +23,18 @@ export default function Page() {
     <div className="text-[#6d4635] font-serif overflow-x-hidden">
       <Navbar />
       {/* Início */}
-      <section id="inicio">
+      <section id="inicio" className="h-screen">
         <Hero />
       </section>
       <Timeline />
-      <div className="mt-2 mb-10">
+     {/*  <div className="mt-2 mb-10">
         <FlowerDividerMain />
-      </div>
-      <div className="v-reposition-container absolute left-0 right-0 w-screen">
-        <div className="h-reposition-container w-screen relative top-[100vh] md:static md:top-0">
-          <section id="o-casal">
+      </div> */}
+      <div className="relative w-screen">
+        <div className="w-screen">
+         {/*  <section id="o-casal">
             <Story />
-          </section>
+          </section> */}
           <Skiper30 />
           <Quote />
           <Hands />

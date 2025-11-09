@@ -71,12 +71,12 @@
     @apply border-border;
   }
   body {
-    /* Default to Migra for paragraphs and subtitles */
+    /* Default to Source Serif Pro for paragraphs and subtitles */
     @apply bg-background text-foreground font-sans;
   }
 }
 
-/* Local fonts: place files under public/fonts/Amoresa and public/fonts/Migra */
+/* Local fonts: place files under public/fonts/Amoresa and public/fonts/Serif */
 @font-face {
   font-family: "Amoresa";
   src:
@@ -86,19 +86,9 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Migra";
+  font-family: "Source Serif Pro";
   src:
-    url("/fonts/Migra/Migra-Extralight.woff2") format("woff2"),
-    url("/fonts/Migra/Migra-Extralight.woff") format("woff");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Migra";
-  src:
-    url("/fonts/Migra/Migra-Extralight.woff2") format("woff2"),
-    url("/fonts/Migra/Migra-Extralight.woff") format("woff");
+    url("/fonts/Serif/source-serif-pro-regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -108,7 +98,7 @@
   src:
     url("/fonts/Migra/Migra-Extralight.woff2") format("woff2"),
     url("/fonts/Migra/Migra-Extralight.woff") format("woff");
-  font-weight: 700;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
