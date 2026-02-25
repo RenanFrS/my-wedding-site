@@ -1,4 +1,5 @@
 import "./globals.css";
+import SmoothScroll from "@/src/components/SmoothScroll";
 
 export const metadata = {
   title: "Renan & Helô",
@@ -22,7 +23,9 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }
