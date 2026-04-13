@@ -59,6 +59,15 @@ const databaseSslConfig = isDatabaseSslDisabled
         : {}),
     };
 
+const databasePoolMax = Number(process.env.PAYLOAD_DATABASE_POOL_MAX || 2);
+const databasePoolMin = Number(process.env.PAYLOAD_DATABASE_POOL_MIN || 0);
+const databasePoolIdleTimeoutMs = Number(
+  process.env.PAYLOAD_DATABASE_POOL_IDLE_TIMEOUT_MS || 10000
+);
+const databasePoolConnectionTimeoutMs = Number(
+  process.env.PAYLOAD_DATABASE_POOL_CONNECTION_TIMEOUT_MS || 10000
+);
+
 const cloudinaryEnabled =
   Boolean(process.env.CLOUDINARY_CLOUD_NAME) &&
   Boolean(process.env.CLOUDINARY_API_KEY) &&
@@ -134,6 +143,10 @@ export default buildConfig({
     pool: {
       connectionString: databaseConnectionString,
       ssl: databaseSslConfig,
+      max: databasePoolMax,
+      min: databasePoolMin,
+      idleTimeoutMillis: databasePoolIdleTimeoutMs,
+      connectionTimeoutMillis: databasePoolConnectionTimeoutMs,
     },
   }),
   email,
