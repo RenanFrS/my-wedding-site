@@ -32,6 +32,15 @@ html.lenis body {
 :root {
   /* Smaller default spacing on mobile; overridden on md+ */
   --horizontal-margin-spacing: 1rem;
+
+  /* Dynamic site colors (overridden via Payload CMS) */
+  --color-primary: #ac5b30;
+  --color-secondary: #6d4635;
+  --color-accent: #fefaf6;
+  --color-text-primary: #6d4635;
+  --color-text-secondary: #ac5b30;
+  --color-background: #fefaf6;
+
   /* #fefaf6 ≈ hsl(30, 80%, 98%) */
   --background: 30 80% 98%;
   /* #ac5b30 ≈ hsl(21, 56%, 43%) */
@@ -106,7 +115,7 @@ html.lenis body {
 @font-face {
   font-family: "Source Serif Pro";
   src:
-    url("/fonts/Serif/source-serif-pro-regular.ttf") format("truetype");
+    url("/fonts/Serif/source-serif-pro.regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

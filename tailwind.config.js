@@ -6,6 +6,7 @@ export default {
     "./components/**/*.{js,jsx,ts,tsx,mdx}",
     "./pages/**/*.{js,jsx,ts,tsx,mdx}",
     "./src/**/*.{js,jsx,ts,tsx,mdx}",
+    "./node_modules/@payloadcms/ui/dist/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
