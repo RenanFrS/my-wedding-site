@@ -37,17 +37,24 @@ parsedDatabaseURL.searchParams.delete('sslcert');
 parsedDatabaseURL.searchParams.delete('sslkey');
 
 const databaseConnectionString = parsedDatabaseURL.toString();
+const databaseCaCert = process.env.PAYLOAD_DATABASE_CA_CERT;
 const databaseCaCertPath = process.env.PAYLOAD_DATABASE_CA_CERT_PATH;
 const databaseSslRejectUnauthorized =
   process.env.PAYLOAD_DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false';
+
+const databaseCaValue = databaseCaCert
+  ? databaseCaCert.replace(/\\n/g, '\n')
+  : databaseCaCertPath
+    ? fs.readFileSync(path.resolve(process.cwd(), databaseCaCertPath), 'utf8')
+    : undefined;
 
 const databaseSslConfig = isDatabaseSslDisabled
   ? false
   : {
       rejectUnauthorized: databaseSslRejectUnauthorized,
-      ...(databaseCaCertPath
+      ...(databaseCaValue
         ? {
-            ca: fs.readFileSync(path.resolve(process.cwd(), databaseCaCertPath), 'utf8'),
+            ca: databaseCaValue,
           }
         : {}),
     };
