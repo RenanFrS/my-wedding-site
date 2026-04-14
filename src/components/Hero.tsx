@@ -37,8 +37,11 @@ export default function Hero({
   });
 
   const scrollToNext = (): void => {
-    const next = document.getElementById('historia');
-    next?.scrollIntoView({ behavior: 'smooth' });
+    const next =
+      document.getElementById('timeline') ||
+      document.getElementById('cerimonia');
+
+    next?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -52,7 +55,7 @@ export default function Hero({
         />
       </div>
       {/* Softer white gradient at the bottom to gently blend with the photo */}
-      <div className="" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-32 md:h-44 bg-gradient-to-t from-[var(--color-secondary)] to-transparent opacity-20" />
 
       {/* Bottom-centered content */}
       <div className="absolute inset-x-0 bottom-10 flex flex-col items-center text-center text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)] px-4 z-30">

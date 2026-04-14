@@ -117,15 +117,17 @@ export default function PayloadMediaRenderer({
   if (isVideo(media)) {
     if (cloudinaryPlayerURL) {
       return (
-        <iframe
-          className={className}
-          src={cloudinaryPlayerURL}
-          title={alt || media?.alt || 'Video'}
-          loading={videoLoading}
-          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-          allowFullScreen
-          frameBorder={0}
-        />
+        <div className={`relative overflow-hidden ${className || 'h-full w-full'}`}>
+          <iframe
+            className="absolute inset-0 h-full w-full scale-[1.08] transform-gpu"
+            src={cloudinaryPlayerURL}
+            title={alt || media?.alt || 'Video'}
+            loading={videoLoading}
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+            allowFullScreen
+            frameBorder={0}
+          />
+        </div>
       );
     }
 
