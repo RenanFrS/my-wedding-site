@@ -1,6 +1,11 @@
 import React from 'react';
 import HomePageClient from '@/components/HomePageClient';
-import { getBackgroundMedia, getCarouselMedia, getSiteSettings } from '@/lib/api';
+import {
+  getBackgroundMedia,
+  getCarouselMedia,
+  getDressCode,
+  getSiteSettings,
+} from '@/lib/api';
 import type { BackgroundMedia, PayloadMedia } from '@/types';
 
 const PANEL_FALLBACK = 'Inserir no seu painel';
@@ -27,10 +32,11 @@ function toMedia(value: unknown): PayloadMedia | null {
 }
 
 export default async function Page(): Promise<React.JSX.Element> {
-  const [settings, carouselEntries, backgrounds] = await Promise.all([
+  const [settings, carouselEntries, backgrounds, dressCode] = await Promise.all([
     getSiteSettings(),
     getCarouselMedia(),
     getBackgroundMedia(),
+    getDressCode(),
   ]);
 
   const coupleName = settings.couple?.coupleName?.trim() || PANEL_FALLBACK;
@@ -62,6 +68,7 @@ export default async function Page(): Promise<React.JSX.Element> {
       ceremonyMedia={getMediaByLocation('section1')}
       registryMedia={getMediaByLocation('section2')}
       carouselMedia={carouselMedia}
+      dressCode={dressCode}
     />
   );
 }

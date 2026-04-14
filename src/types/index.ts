@@ -27,6 +27,7 @@ export interface Guest {
 export interface PayloadMedia {
   id: string;
   url?: string;
+  cloudinaryPlayerURL?: string;
   filename: string;
   mimeType?: string;
   width?: number;
@@ -74,6 +75,19 @@ export interface GiftItem {
   image: PayloadMedia;
   price: number;
   paymentLink?: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Dress code section content */
+export interface DressCodeContent {
+  id: string | number;
+  style: string;
+  description: string;
+  forHer: string;
+  forHim: string;
+  media: PayloadMedia | null;
   active: boolean;
   createdAt: string;
   updatedAt: string;

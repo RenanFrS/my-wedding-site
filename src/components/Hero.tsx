@@ -47,6 +47,7 @@ export default function Hero({
         <PayloadMediaRenderer
           media={media}
           className="h-full w-full object-cover"
+          videoLoading="eager"
           emptyMessage="Inserir no seu painel: Background Media > Hero"
         />
       </div>

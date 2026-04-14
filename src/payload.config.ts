@@ -14,6 +14,7 @@ import { Media } from './collections/Media';
 import { Guests } from './collections/Guests';
 import { VerticalCarouselMedia } from './collections/VerticalCarouselMedia';
 import { BackgroundMedia } from './collections/BackgroundMedia';
+import { DressCode } from './collections/DressCode';
 import { GiftList } from './collections/GiftList';
 import { RSVPs } from './collections/RSVP';
 
@@ -59,13 +60,17 @@ const databaseSslConfig = isDatabaseSslDisabled
         : {}),
     };
 
-const databasePoolMax = Number(process.env.PAYLOAD_DATABASE_POOL_MAX || 2);
+const isProduction = process.env.NODE_ENV === 'production';
+
+const databasePoolMax = Number(
+  process.env.PAYLOAD_DATABASE_POOL_MAX || (isProduction ? 2 : 6)
+);
 const databasePoolMin = Number(process.env.PAYLOAD_DATABASE_POOL_MIN || 0);
 const databasePoolIdleTimeoutMs = Number(
-  process.env.PAYLOAD_DATABASE_POOL_IDLE_TIMEOUT_MS || 10000
+  process.env.PAYLOAD_DATABASE_POOL_IDLE_TIMEOUT_MS || (isProduction ? 10000 : 30000)
 );
 const databasePoolConnectionTimeoutMs = Number(
-  process.env.PAYLOAD_DATABASE_POOL_CONNECTION_TIMEOUT_MS || 10000
+  process.env.PAYLOAD_DATABASE_POOL_CONNECTION_TIMEOUT_MS || (isProduction ? 10000 : 30000)
 );
 
 const cloudinaryEnabled =
@@ -130,6 +135,7 @@ export default buildConfig({
     Guests,
     VerticalCarouselMedia,
     BackgroundMedia,
+    DressCode,
     GiftList,
     RSVPs,
   ],

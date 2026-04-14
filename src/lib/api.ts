@@ -2,6 +2,7 @@ import type {
   SiteSettings,
   VerticalCarouselMedia,
   BackgroundMedia,
+  DressCodeContent,
   GiftItem,
   Guest,
   PayloadListResponse,
@@ -125,6 +126,20 @@ export async function getBackgroundMedia(
     return data.docs;
   } catch {
     return [];
+  }
+}
+
+// ── Dress Code ──
+
+export async function getDressCode(): Promise<DressCodeContent | null> {
+  try {
+    const data = await payloadFetch<PayloadListResponse<DressCodeContent>>(
+      '/dress-code?where[active][equals]=true&sort=-updatedAt&limit=1&depth=1'
+    );
+
+    return data.docs[0] || null;
+  } catch {
+    return null;
   }
 }
 

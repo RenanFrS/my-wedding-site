@@ -15,7 +15,13 @@ interface NavbarProps {
   weddingDateText: string;
 }
 
-const sections: string[] = ['inicio', 'o-casal', 'cerimonia', 'confirmacao', 'presentes'];
+const sections: string[] = [
+  'inicio',
+  'cerimonia',
+  'vestimenta',
+  'confirmacao',
+  'presentes',
+];
 
 export default function Navbar({ coupleName, weddingDateText }: NavbarProps): React.JSX.Element {
   const active: string | null = useScrollSpy(sections);
@@ -58,8 +64,8 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
 
   const navLinks: NavLink[] = [
     { id: 'inicio', label: 'Início' },
-    { id: 'o-casal', label: 'O Casal' },
     { id: 'cerimonia', label: 'Cerimônia' },
+    { id: 'vestimenta', label: 'Dress Code' },
     { id: 'confirmacao', label: 'Confirmação' },
     { id: 'presentes', label: 'Presentes' },
   ];
@@ -124,8 +130,8 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
             position="right"
             items={[
               { label: 'Início', link: '#inicio', ariaLabel: 'Ir para Início' },
-              { label: 'O Casal', link: '#o-casal', ariaLabel: 'Ir para O Casal' },
               { label: 'Cerimônia', link: '#cerimonia', ariaLabel: 'Ir para Cerimônia' },
+              { label: 'Dress Code', link: '#vestimenta', ariaLabel: 'Ir para Dress Code' },
               { label: 'Confirmação', link: '#confirmacao', ariaLabel: 'Ir para Confirmação' },
               { label: 'Presentes', link: '#presentes', ariaLabel: 'Ir para Presentes' },
             ]}

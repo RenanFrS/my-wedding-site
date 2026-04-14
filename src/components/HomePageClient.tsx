@@ -8,13 +8,14 @@ import Skiper30 from '@/components/Skiper30';
 import Quote from '@/components/Quote';
 import Hands from '@/components/Hands';
 import Stay from '@/components/Stay';
+import DressCodeSection from '@/components/DressCodeSection';
 import Confirmacao from '@/components/Confirmacao';
 import MensagemNoivos from '@/components/MensagemNoivos';
 import Registry from '@/components/Registry';
 import PartingMessage from '@/components/PartingMessage';
 import Footer from '@/components/Footer';
 import { useRevealOnScroll } from '@/components/hooks/useRevealOnScroll';
-import type { PayloadMedia } from '@/types';
+import type { DressCodeContent, PayloadMedia } from '@/types';
 
 interface HomePageClientProps {
   coupleName: string;
@@ -28,6 +29,7 @@ interface HomePageClientProps {
   ceremonyMedia: PayloadMedia | null;
   registryMedia: PayloadMedia | null;
   carouselMedia: PayloadMedia[];
+  dressCode: DressCodeContent | null;
 }
 
 export default function HomePageClient({
@@ -42,6 +44,7 @@ export default function HomePageClient({
   ceremonyMedia,
   registryMedia,
   carouselMedia,
+  dressCode,
 }: HomePageClientProps): React.JSX.Element {
   useRevealOnScroll();
 
@@ -65,6 +68,7 @@ export default function HomePageClient({
           <Quote />
           <Hands media={middleMedia} />
           <Stay media={ceremonyMedia} />
+          <DressCodeSection content={dressCode} />
           <Confirmacao />
           <MensagemNoivos />
           <section id="presentes">

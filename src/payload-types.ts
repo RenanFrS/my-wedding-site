@@ -72,6 +72,7 @@ export interface Config {
     guests: Guest;
     'vertical-carousel-media': VerticalCarouselMedia;
     'background-media': BackgroundMedia;
+    'dress-code': DressCode;
     'gift-list': GiftList;
     rsvps: Rsvp;
     'payload-kv': PayloadKv;
@@ -86,6 +87,7 @@ export interface Config {
     guests: GuestsSelect<false> | GuestsSelect<true>;
     'vertical-carousel-media': VerticalCarouselMediaSelect<false> | VerticalCarouselMediaSelect<true>;
     'background-media': BackgroundMediaSelect<false> | BackgroundMediaSelect<true>;
+    'dress-code': DressCodeSelect<false> | DressCodeSelect<true>;
     'gift-list': GiftListSelect<false> | GiftListSelect<true>;
     rsvps: RsvpsSelect<false> | RsvpsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -166,6 +168,10 @@ export interface User {
 export interface Media {
   id: number;
   alt: string;
+  /**
+   * Opcional para videos: cole o Link ou o src do iframe gerado no Video Player Studio do Cloudinary.
+   */
+  cloudinaryPlayerURL?: string | null;
   /**
    * Cloudinary Media Information
    */
@@ -291,6 +297,23 @@ export interface BackgroundMedia {
   createdAt: string;
 }
 /**
+ * Conteúdo da seção de vestimenta (Dress Code).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dress-code".
+ */
+export interface DressCode {
+  id: number;
+  style: string;
+  description: string;
+  forHer: string;
+  forHim: string;
+  media: number | Media;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Lista de presentes do casamento.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -377,6 +400,10 @@ export interface PayloadLockedDocument {
         value: number | BackgroundMedia;
       } | null)
     | ({
+        relationTo: 'dress-code';
+        value: number | DressCode;
+      } | null)
+    | ({
         relationTo: 'gift-list';
         value: number | GiftList;
       } | null)
@@ -455,6 +482,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  cloudinaryPlayerURL?: T;
   cloudinary?:
     | T
     | {
@@ -523,6 +551,20 @@ export interface VerticalCarouselMediaSelect<T extends boolean = true> {
 export interface BackgroundMediaSelect<T extends boolean = true> {
   media?: T;
   location?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dress-code_select".
+ */
+export interface DressCodeSelect<T extends boolean = true> {
+  style?: T;
+  description?: T;
+  forHer?: T;
+  forHim?: T;
+  media?: T;
   active?: T;
   updatedAt?: T;
   createdAt?: T;

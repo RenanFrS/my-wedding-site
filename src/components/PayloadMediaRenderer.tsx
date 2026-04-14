@@ -11,6 +11,7 @@ interface PayloadMediaRendererProps {
   autoPlayVideo?: boolean;
   mutedVideo?: boolean;
   loopVideo?: boolean;
+  videoLoading?: 'eager' | 'lazy';
 }
 
 function resolveMediaURL(media?: PayloadMedia | null): string {
@@ -23,6 +24,71 @@ function isVideo(media?: PayloadMedia | null): boolean {
   return mime.startsWith('video/') || resourceType === 'video';
 }
 
+function extractCloudinaryCloudName(media?: PayloadMedia | null): string {
+  const secureURL = media?.cloudinary?.secure_url || media?.url;
+  if (!secureURL) return '';
+
+  try {
+    const parsed = new URL(secureURL);
+    if (!parsed.hostname.endsWith('cloudinary.com')) return '';
+    return parsed.pathname.split('/').filter(Boolean)[0] || '';
+  } catch {
+    return '';
+  }
+}
+
+function extractURLFromInput(value: string): string {
+  const trimmed = value.trim();
+  const srcMatch = trimmed.match(/src=["']([^"']+)["']/i);
+  return (srcMatch?.[1] || trimmed).trim();
+}
+
+function withCloudinaryPlayerDefaults(rawURL: string): string {
+  try {
+    const parsed = new URL(rawURL);
+    if (parsed.hostname !== 'player.cloudinary.com') {
+      return rawURL;
+    }
+
+    parsed.searchParams.set('player[autoplay]', 'true');
+    parsed.searchParams.set('player[muted]', 'true');
+    parsed.searchParams.set('player[loop]', 'true');
+    parsed.searchParams.set('player[controls]', 'false');
+    parsed.searchParams.set('source[transformation][quality]', 'auto');
+    parsed.searchParams.set('source[transformation][fetch_format]', 'auto');
+
+    return parsed.toString();
+  } catch {
+    return rawURL;
+  }
+}
+
+function buildCloudinaryPlayerURL(media?: PayloadMedia | null): string | null {
+  if (!isVideo(media)) return null;
+
+  const configuredURL = media?.cloudinaryPlayerURL;
+  if (configuredURL) {
+    return withCloudinaryPlayerDefaults(extractURLFromInput(configuredURL));
+  }
+
+  const publicId = media?.cloudinary?.public_id;
+  const cloudName = extractCloudinaryCloudName(media);
+
+  if (!publicId || !cloudName) return null;
+
+  const parsed = new URL('https://player.cloudinary.com/embed/');
+  parsed.searchParams.set('cloud_name', cloudName);
+  parsed.searchParams.set('public_id', publicId);
+  parsed.searchParams.set('player[autoplay]', 'true');
+  parsed.searchParams.set('player[muted]', 'true');
+  parsed.searchParams.set('player[loop]', 'true');
+  parsed.searchParams.set('player[controls]', 'false');
+  parsed.searchParams.set('source[transformation][quality]', 'auto');
+  parsed.searchParams.set('source[transformation][fetch_format]', 'auto');
+
+  return parsed.toString();
+}
+
 export default function PayloadMediaRenderer({
   media,
   alt,
@@ -31,8 +97,10 @@ export default function PayloadMediaRenderer({
   autoPlayVideo = true,
   mutedVideo = true,
   loopVideo = true,
+  videoLoading = 'lazy',
 }: PayloadMediaRendererProps): React.JSX.Element {
   const src = resolveMediaURL(media);
+  const cloudinaryPlayerURL = buildCloudinaryPlayerURL(media);
 
   if (!src) {
     return (
@@ -47,6 +115,20 @@ export default function PayloadMediaRenderer({
   }
 
   if (isVideo(media)) {
+    if (cloudinaryPlayerURL) {
+      return (
+        <iframe
+          className={className}
+          src={cloudinaryPlayerURL}
+          title={alt || media?.alt || 'Video'}
+          loading={videoLoading}
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+          allowFullScreen
+          frameBorder={0}
+        />
+      );
+    }
+
     return (
       <video
         className={className}
@@ -56,7 +138,7 @@ export default function PayloadMediaRenderer({
         loop={loopVideo}
         autoPlay={autoPlayVideo}
         controls={false}
-        preload="metadata"
+        preload={videoLoading === 'eager' ? 'auto' : 'metadata'}
       />
     );
   }
