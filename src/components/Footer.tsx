@@ -16,38 +16,43 @@ export default function Footer({
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="mt-16 md:mt-[20vh] w-full">
-      {/* Conteúdo principal do footer */}
-      <div className="bg-olive py-12 md:py-[10vh] px-6 md:px-[30px] text-center shadow-inner">
-        <div className="max-w-[800px] mx-auto">
-          <h2 className="title text-2xl md:text-[2.5rem] italic mb-8 font-normal">
-            Com amor e Carinho
-          </h2>
-          <div className="flex flex-col items-center mb-8">
-            <h2 className="name text-xl md:text-[2rem] font-medium my-2 tracking-wide">
-              {groomFullName}
+    <footer className="mt-16 md:mt-[14vh] w-full border-t border-[var(--color-secondary)]/20 bg-[var(--color-background)]">
+      <div className="hz-margin py-12 md:py-16">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
+          <div className="space-y-3">
+            <h2 className="text-[1.9rem] md:text-[2.2rem] leading-none font-medium text-[var(--color-text-primary)]">
+              {coupleName}
             </h2>
-            <div className="ampersand text-[2.5rem] italic my-2">&</div>
-            <h2 className="name text-xl md:text-[2rem] font-medium my-2 tracking-wide">
-              {brideFullName}
-            </h2>
+            <p className="text-[1.35rem] italic font-amoresa text-[var(--color-secondary)]">
+              Com amor e Carinho
+            </p>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-primary)]/65">
+              © {currentYear}: {coupleName}
+            </p>
           </div>
-          <div className="heart-divider flex items-center justify-center my-6 w-full">
-            <span className="left-line h-px w-[60px] md:w-[100px] bg-[#33290a]"></span>
-            <i className="heart-icon text-[1.8rem] mx-[15px]">♥</i>
-            <span className="right-line h-px w-[60px] md:w-[100px] bg-[#33290a]"></span>
+
+          <div className="space-y-3">
+            <h3 className="text-[1.1rem] italic text-[var(--color-secondary)]">Noivo</h3>
+            <p className="text-sm uppercase tracking-[0.08em] text-[var(--color-text-primary)]/85">
+              {groomFullName}
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-[1.1rem] italic text-[var(--color-secondary)]">Noiva</h3>
+            <p className="text-sm uppercase tracking-[0.08em] text-[var(--color-text-primary)]/85">
+              {brideFullName}
+            </p>
           </div>
         </div>
-      </div>
-      
-      {/* Barra de copyright */}
-      <div className="bg-[#FFC885] py-6 px-6 md:px-[30px] text-center">
-        <div className="max-w-[1200px] mx-auto text-[#6d4635] text-sm md:text-base">
+
+        <div className="mt-8 border-t border-[var(--color-secondary)]/20 pt-5 flex flex-col gap-2 text-xs md:flex-row md:items-center md:justify-between text-[var(--color-text-primary)]/75">
+          <p>Todos os direitos reservados.</p>
           <p>
-            © {currentYear}: {coupleName} - Todos os direitos reservados, Desenvolvido por:{' '}
+            Desenvolvido por:{' '}
             <a
               href="http://instagram.com/renanrocha.01/"
-              className="text-[#ac5b30] font-semibold hover:underline transition-all"
+              className="font-semibold text-[var(--color-secondary)] hover:underline transition-all"
               target="_blank"
               rel="noopener noreferrer"
             >

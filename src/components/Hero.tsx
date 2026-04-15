@@ -54,8 +54,15 @@ export default function Hero({
           emptyMessage="Inserir no seu painel: Background Media > Hero"
         />
       </div>
-      {/* Softer white gradient at the bottom to gently blend with the photo */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-32 md:h-44 bg-gradient-to-t from-[var(--color-secondary)] to-transparent opacity-20" />
+      {/* Gradient fixed at hero bottom using site background color */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 md:h-60"
+        style={{
+          background:
+            'linear-gradient(to top, var(--color-background) 0%, rgba(0, 0, 0, 0) 85%)',
+          opacity: 0.45,
+        }}
+      />
 
       {/* Bottom-centered content */}
       <div className="absolute inset-x-0 bottom-10 flex flex-col items-center text-center text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)] px-4 z-30">

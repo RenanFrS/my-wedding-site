@@ -75,6 +75,7 @@ export interface Config {
     'dress-code': DressCode;
     'gift-list': GiftList;
     rsvps: Rsvp;
+    'couple-messages': CoupleMessage;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     'dress-code': DressCodeSelect<false> | DressCodeSelect<true>;
     'gift-list': GiftListSelect<false> | GiftListSelect<true>;
     rsvps: RsvpsSelect<false> | RsvpsSelect<true>;
+    'couple-messages': CoupleMessagesSelect<false> | CoupleMessagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -334,7 +336,7 @@ export interface GiftList {
   createdAt: string;
 }
 /**
- * Gestão de convites por família/grupo e envio de mensagens WhatsApp.
+ * Controle de confirmação por família/grupo e disparo de lembretes para quem ainda está pendente.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rsvps".
@@ -343,6 +345,10 @@ export interface Rsvp {
   id: number;
   groupName: string;
   phone: string;
+  /**
+   * Quantidade de convidados desse grupo que ainda não confirmaram presença.
+   */
+  pendingCount?: number | null;
   members?:
     | {
         name: string;
@@ -352,6 +358,21 @@ export interface Rsvp {
     | null;
   token?: string | null;
   securityCode?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Mensagens públicas enviadas para os noivos. Qualquer visitante pode enviar.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "couple-messages".
+ */
+export interface CoupleMessage {
+  id: number;
+  senderName: string;
+  senderEmail: string;
+  message: string;
+  published?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -410,6 +431,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'rsvps';
         value: number | Rsvp;
+      } | null)
+    | ({
+        relationTo: 'couple-messages';
+        value: number | CoupleMessage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -590,6 +615,7 @@ export interface GiftListSelect<T extends boolean = true> {
 export interface RsvpsSelect<T extends boolean = true> {
   groupName?: T;
   phone?: T;
+  pendingCount?: T;
   members?:
     | T
     | {
@@ -599,6 +625,18 @@ export interface RsvpsSelect<T extends boolean = true> {
       };
   token?: T;
   securityCode?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "couple-messages_select".
+ */
+export interface CoupleMessagesSelect<T extends boolean = true> {
+  senderName?: T;
+  senderEmail?: T;
+  message?: T;
+  published?: T;
   updatedAt?: T;
   createdAt?: T;
 }

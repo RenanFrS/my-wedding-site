@@ -5,8 +5,8 @@ export const RSVPs: CollectionConfig = {
   slug: 'rsvps',
   admin: {
     useAsTitle: 'groupName',
-    defaultColumns: ['groupName', 'phone', 'token', 'securityCode'],
-    description: 'Gestão de convites por família/grupo e envio de mensagens WhatsApp.',
+    defaultColumns: ['groupName', 'pendingCount', 'phone', 'token', 'securityCode'],
+    description: 'Controle de confirmação por família/grupo e disparo de lembretes para quem ainda está pendente.',
   },
   access: {
     read: () => true, // Para o frontend consultar pelo token
@@ -17,7 +17,7 @@ export const RSVPs: CollectionConfig = {
   hooks: {
     // Gerar automaticamente o Token da URL e o Código de Segurança ao criar o registro
     beforeChange: [
-      ({ data, operation }) => {
+      ({ data, operation, originalDoc }) => {
         if (operation === 'create') {
           if (!data.token) {
             data.token = crypto.randomBytes(12).toString('hex'); // ex: cmfzv2ytd...
@@ -27,6 +27,15 @@ export const RSVPs: CollectionConfig = {
             data.securityCode = Math.floor(100000 + Math.random() * 900000).toString();
           }
         }
+
+        const members = Array.isArray(data.members)
+          ? data.members
+          : Array.isArray(originalDoc?.members)
+            ? originalDoc.members
+            : [];
+
+        data.pendingCount = members.filter((member: any) => member?.status === 'pending').length;
+
         return data;
       },
     ],
@@ -43,6 +52,16 @@ export const RSVPs: CollectionConfig = {
       type: 'text',
       label: 'Telefone (WhatsApp do Titular)',
       required: true,
+    },
+    {
+      name: 'pendingCount',
+      type: 'number',
+      label: 'Convidados Pendentes',
+      defaultValue: 0,
+      admin: {
+        readOnly: true,
+        description: 'Quantidade de convidados desse grupo que ainda não confirmaram presença.',
+      },
     },
     {
       name: 'members',

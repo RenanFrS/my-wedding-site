@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -11,96 +11,133 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-interface Message {
-  id: number;
-  nome: string;
-  trecho: string;
-  email: string;
-  at: number;
+interface CoupleMessage {
+  id: number | string;
+  senderName: string;
+  senderEmail: string;
+  message: string;
+  createdAt?: string;
 }
 
-// Mock existing messages (would later come from backend / API)
-const INITIAL_MESSAGES: Message[] = [
-  {
-    id: 1,
-    nome: "Ana Clara",
-    trecho: "Que dia especial!",
-    email: "ana@example.com",
-    at: Date.now() - 1000000,
-  },
-  {
-    id: 2,
-    nome: "Bruno",
-    trecho: "Felizes por vocês!",
-    email: "bru@example.com",
-    at: Date.now() - 900000,
-  },
-  {
-    id: 3,
-    nome: "Carlos",
-    trecho: "Mal posso esperar ♥",
-    email: "carlos@example.com",
-    at: Date.now() - 800000,
-  },
-  {
-    id: 4,
-    nome: "Daniela",
-    trecho: "Será lindo!",
-    email: "dani@example.com",
-    at: Date.now() - 700000,
-  },
-  {
-    id: 5,
-    nome: "Eduarda",
-    trecho: "Com amor e alegria!",
-    email: "duda@example.com",
-    at: Date.now() - 600000,
-  },
-  {
-    id: 6,
-    nome: "Felipe",
-    trecho: "Contando os dias ✨",
-    email: "felipe@example.com",
-    at: Date.now() - 500000,
-  },
-];
+interface PayloadListResponse<T> {
+  docs: T[];
+}
 
 export default function MensagemNoivos(): React.JSX.Element {
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState<CoupleMessage[]>([]);
   const [nome, setNome] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [recado, setRecado] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [loadingData, setLoadingData] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<string>("");
+  const [submitError, setSubmitError] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+
   const maxChars: number = 70;
   const perPage: number = 5;
 
   const remaining: number = maxChars - recado.length;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const fetchMessages = useCallback(async (): Promise<void> => {
+    const res = await fetch(
+      "/api/couple-messages?limit=100&depth=1&sort=-createdAt&where[published][equals]=true",
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Não foi possível carregar as mensagens.");
+    }
+
+    const data = (await res.json()) as PayloadListResponse<CoupleMessage>;
+    setMessages(data.docs || []);
+    setPage(1);
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadInitialData = async (): Promise<void> => {
+      setLoadingData(true);
+      setLoadError("");
+
+      try {
+        await fetchMessages();
+      } catch (error) {
+        if (!active) return;
+        setLoadError(
+          error instanceof Error
+            ? error.message
+            : "Falha ao carregar os dados."
+        );
+      } finally {
+        if (active) setLoadingData(false);
+      }
+    };
+
+    void loadInitialData();
+
+    return () => {
+      active = false;
+    };
+  }, [fetchMessages]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    setSubmitError("");
+    setSuccessMessage("");
+
     if (!nome.trim() || !email.trim() || !recado.trim()) return;
     if (recado.length > maxChars) return;
+
     setSubmitting(true);
-    // Simulate async
-    setTimeout(() => {
-      const newMsg: Message = {
-        id: messages.length + 1,
-        nome: nome.trim(),
-        email: email.trim(),
-        trecho: recado.trim(),
-        at: Date.now(),
-      };
-      setMessages([newMsg, ...messages]);
+
+    try {
+      const response = await fetch("/api/couple-messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          senderName: nome.trim(),
+          senderEmail: email.trim(),
+          message: recado.trim(),
+          published: true,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        const payloadMessage =
+          errorData?.errors?.[0]?.message ||
+          errorData?.message ||
+          errorData?.error ||
+          "Não foi possível enviar a mensagem.";
+        throw new Error(payloadMessage);
+      }
+
+      await fetchMessages();
+
       setNome("");
       setEmail("");
       setRecado("");
+      setSuccessMessage("Mensagem enviada com sucesso para os noivos.");
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Falha ao enviar a mensagem."
+      );
+    } finally {
       setSubmitting(false);
-    }, 500);
+    }
   };
 
   const totalPages: number = Math.max(1, Math.ceil(messages.length / perPage));
-  const visible = useMemo<Message[]>(() => {
+  const visible = useMemo<CoupleMessage[]>(() => {
     const start: number = (page - 1) * perPage;
     return messages.slice(start, start + perPage);
   }, [messages, page]);
@@ -125,6 +162,14 @@ export default function MensagemNoivos(): React.JSX.Element {
 
         {/* Form Card */}
         <div className="bg-white/70 backdrop-blur rounded-xl shadow-sm border border-black/5 p-5 md:p-8 mb-14">
+          {loadingData && (
+            <p className="mb-4 text-sm text-[#6d4635]/75 font-sans">Carregando mensagens...</p>
+          )}
+
+          {loadError && (
+            <p className="mb-4 text-sm text-red-700 font-sans">{loadError}</p>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6 font-sans">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -141,6 +186,7 @@ export default function MensagemNoivos(): React.JSX.Element {
                   required
                 />
               </div>
+
               <div>
                 <label className="block text-[11px] uppercase tracking-wider text-[#ac5b30] font-semibold mb-1">
                   Seu email
@@ -177,10 +223,24 @@ export default function MensagemNoivos(): React.JSX.Element {
                 )}
               </div>
             </div>
+
+            {submitError && (
+              <p className="text-sm text-red-700">{submitError}</p>
+            )}
+
+            {successMessage && (
+              <p className="text-sm text-emerald-700">{successMessage}</p>
+            )}
+
             <div className="text-right">
               <button
                 type="submit"
-                disabled={submitting || !nome || !email || !recado}
+                disabled={
+                  submitting ||
+                  !nome ||
+                  !email ||
+                  !recado
+                }
                 className="px-6 py-2 rounded-full bg-[#ac5b30] disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs tracking-wide hover:brightness-110 transition"
               >
                 {submitting ? "Enviando..." : "Enviar mensagem"}
@@ -191,6 +251,12 @@ export default function MensagemNoivos(): React.JSX.Element {
 
         {/* Messages List */}
         <div className="space-y-4">
+          {!loadingData && visible.length === 0 && (
+            <div className="bg-white/60 backdrop-blur-sm border border-black/5 rounded-lg px-5 py-4 text-sm text-[#6d4635]/75">
+              Ainda nao ha mensagens publicadas.
+            </div>
+          )}
+
           {visible.map((m) => (
             <div
               key={m.id}
@@ -198,14 +264,14 @@ export default function MensagemNoivos(): React.JSX.Element {
             >
               <div>
                 <div className="font-semibold text-sm text-[#ac5b30]">
-                  {m.nome}
+                  {m.senderName}
                 </div>
-                <div className="text-xs text-[#6d4635]/70 mt-0.5">
-                  {m.trecho}
+                <div className="text-xs text-[#6d4635]/70 mt-1.5">
+                  {m.message}
                 </div>
               </div>
               <div className="text-[10px] text-[#6d4635]/50 font-mono">
-                {new Date(m.at).toLocaleDateString("pt-BR", {
+                {new Date(m.createdAt || Date.now()).toLocaleDateString("pt-BR", {
                   day: "2-digit",
                   month: "2-digit",
                   year: "numeric",

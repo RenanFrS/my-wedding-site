@@ -17,6 +17,7 @@ import { BackgroundMedia } from './collections/BackgroundMedia';
 import { DressCode } from './collections/DressCode';
 import { GiftList } from './collections/GiftList';
 import { RSVPs } from './collections/RSVP';
+import { CoupleMessages } from './collections/CoupleMessages';
 
 // Globals
 import { SiteSettings } from './globals/SiteSettings';
@@ -138,6 +139,7 @@ export default buildConfig({
     DressCode,
     GiftList,
     RSVPs,
+    CoupleMessages,
   ],
   globals: [SiteSettings],
   editor: lexicalEditor(),

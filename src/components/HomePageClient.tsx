@@ -67,19 +67,32 @@ export default function HomePageClient({
           <Skiper30 mediaItems={carouselMedia} />
           <Quote />
           <Hands media={middleMedia} />
-          <Stay media={ceremonyMedia} />
+          <div className="relative z-20 -mt-16 md:-mt-24 rounded-t-[2rem] md:rounded-t-[3.5rem] bg-[var(--color-background)] pt-6 md:pt-10">
+            <Stay media={ceremonyMedia} />
+          </div>
           <DressCodeSection content={dressCode} />
           <Confirmacao />
           <MensagemNoivos />
           <section id="presentes">
             <Registry media={registryMedia} />
           </section>
-          <PartingMessage />
-          <Footer
-            coupleName={coupleName}
-            groomFullName={groomFullName}
-            brideFullName={brideFullName}
-          />
+          <div className="relative overflow-hidden">
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: 'linear-gradient(to bottom, transparent 0%, var(--color-secondary) 100%)',
+                opacity: 0.18,
+              }}
+            />
+            <div className="relative z-10">
+              <PartingMessage />
+              <Footer
+                coupleName={coupleName}
+                groomFullName={groomFullName}
+                brideFullName={brideFullName}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
