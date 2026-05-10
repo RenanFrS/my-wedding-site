@@ -13,19 +13,17 @@ export function formatPrice(price: number): string {
 }
 
 export function buildCSSVariables(colors: {
-  primaryColor: string;
-  secondaryColor: string;
-  accentColor: string;
-  textPrimaryColor: string;
-  textSecondaryColor: string;
+  titleColor: string;
+  subtitleColor: string;
   backgroundColor: string;
+  buttonColor: string;
+  textColor: string;
 }): Record<string, string> {
   return {
-    '--color-primary': colors.primaryColor,
-    '--color-secondary': colors.secondaryColor,
-    '--color-accent': colors.accentColor,
-    '--color-text-primary': colors.textPrimaryColor,
-    '--color-text-secondary': colors.textSecondaryColor,
+    '--color-title': colors.titleColor,
+    '--color-subtitle': colors.subtitleColor,
     '--color-background': colors.backgroundColor,
+    '--color-button': colors.buttonColor,
+    '--color-text': colors.textColor,
   };
 }

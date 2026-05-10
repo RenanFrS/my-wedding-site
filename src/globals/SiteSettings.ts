@@ -73,49 +73,69 @@ export const SiteSettings: GlobalConfig = {
               label: 'Cores do Site',
               fields: [
                 {
-                  name: 'primaryColor',
+                  name: 'titleColor',
                   type: 'text',
-                  label: 'Cor Primária',
+                  label: 'Cor de Título',
                   required: true,
                   defaultValue: '#ac5b30',
                   admin: {
-                    description: 'Cor principal do site (ex: #ac5b30). Use o formato hexadecimal.',
+                    description: 'Aplicada nas chamadas/headings principais (h1, h2).',
+                    components: {
+                      Field: '@/components/payload/ColorPicker#default',
+                    },
                   },
                 },
                 {
-                  name: 'secondaryColor',
+                  name: 'subtitleColor',
                   type: 'text',
-                  label: 'Cor Secundária',
+                  label: 'Cor de Subtítulo',
                   required: true,
                   defaultValue: '#6d4635',
-                },
-                {
-                  name: 'accentColor',
-                  type: 'text',
-                  label: 'Cor de Destaque',
-                  required: true,
-                  defaultValue: '#fefaf6',
-                },
-                {
-                  name: 'textPrimaryColor',
-                  type: 'text',
-                  label: 'Cor do Texto Primário',
-                  required: true,
-                  defaultValue: '#6d4635',
-                },
-                {
-                  name: 'textSecondaryColor',
-                  type: 'text',
-                  label: 'Cor do Texto Secundário',
-                  required: true,
-                  defaultValue: '#ac5b30',
+                  admin: {
+                    description: 'Aplicada em subtítulos e detalhes secundários.',
+                    components: {
+                      Field: '@/components/payload/ColorPicker#default',
+                    },
+                  },
                 },
                 {
                   name: 'backgroundColor',
                   type: 'text',
-                  label: 'Cor de Fundo',
+                  label: 'Cor de Background do Site',
                   required: true,
                   defaultValue: '#fefaf6',
+                  admin: {
+                    description: 'Cor de fundo geral das seções.',
+                    components: {
+                      Field: '@/components/payload/ColorPicker#default',
+                    },
+                  },
+                },
+                {
+                  name: 'buttonColor',
+                  type: 'text',
+                  label: 'Cor de Botões',
+                  required: true,
+                  defaultValue: '#ac5b30',
+                  admin: {
+                    description: 'Cor dos botões principais (CTAs).',
+                    components: {
+                      Field: '@/components/payload/ColorPicker#default',
+                    },
+                  },
+                },
+                {
+                  name: 'textColor',
+                  type: 'text',
+                  label: 'Cor de Texto',
+                  required: true,
+                  defaultValue: '#6d4635',
+                  admin: {
+                    description: 'Cor dos textos corridos / parágrafos.',
+                    components: {
+                      Field: '@/components/payload/ColorPicker#default',
+                    },
+                  },
                 },
               ],
             },

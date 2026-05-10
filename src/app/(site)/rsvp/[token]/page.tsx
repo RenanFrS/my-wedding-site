@@ -26,14 +26,14 @@ export default async function RSVPPage({
 
   if (!group) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[var(--color-bg)] text-[#6d4635] text-xl">
+      <div className="flex h-screen items-center justify-center bg-[var(--color-background)] text-[#6d4635] text-xl">
         O link de confirmação é inválido ou expirou.
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen pt-24 pb-12 px-4 bg-[var(--color-bg)]">
+    <main className="min-h-screen pt-24 pb-12 px-4 bg-[var(--color-background)]">
       <div className="max-w-3xl mx-auto text-center">
         <h1 className="text-4xl font-serif text-[#ac5b30]">Confirme sua Presença</h1>
         <p className="opacity-80 mt-2 text-lg font-serif">{group.groupName}</p>

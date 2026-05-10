@@ -49,7 +49,7 @@ export default function HomePageClient({
   useRevealOnScroll();
 
   return (
-    <div className="text-[var(--color-text-primary)] font-serif overflow-x-hidden">
+    <div className="text-[var(--color-text)] font-serif overflow-x-hidden">
       <Navbar coupleName={coupleName} weddingDateText={weddingDateText} />
 
       <section id="inicio" className="h-screen">
@@ -80,7 +80,7 @@ export default function HomePageClient({
             <div
               className="pointer-events-none absolute inset-0"
               style={{
-                background: 'linear-gradient(to bottom, transparent 0%, var(--color-secondary) 100%)',
+                background: 'linear-gradient(to bottom, transparent 0%, var(--color-subtitle) 100%)',
                 opacity: 0.18,
               }}
             />

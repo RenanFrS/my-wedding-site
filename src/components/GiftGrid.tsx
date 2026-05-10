@@ -45,16 +45,16 @@ function GiftCard({ item, defaultPaymentLink }: GiftCardProps): React.JSX.Elemen
 
       {/* Content */}
       <div className="p-5 space-y-3">
-        <h3 className="font-semibold text-base text-[var(--color-text-primary)] leading-tight">
+        <h3 className="font-semibold text-base text-[var(--color-text)] leading-tight">
           {item.title}
         </h3>
         {item.subtitle && (
-          <p className="text-xs text-[var(--color-text-primary)]/70 line-clamp-2">
+          <p className="text-xs text-[var(--color-text)]/70 line-clamp-2">
             {item.subtitle}
           </p>
         )}
         <div className="flex items-center justify-between pt-2">
-          <span className="text-lg font-bold text-[var(--color-text-secondary)]">
+          <span className="text-lg font-bold text-[var(--color-title)]">
             {formatPrice(item.price)}
           </span>
           {paymentUrl ? (
@@ -62,12 +62,12 @@ function GiftCard({ item, defaultPaymentLink }: GiftCardProps): React.JSX.Elemen
               href={paymentUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-5 py-2 rounded-full bg-[var(--color-primary)] text-white text-xs font-medium tracking-wide hover:brightness-110 transition-all"
+              className="inline-flex items-center px-5 py-2 rounded-full bg-[var(--color-button)] text-white text-xs font-medium tracking-wide hover:brightness-110 transition-all"
             >
               Presentear
             </a>
           ) : (
-            <span className="text-xs text-[var(--color-text-primary)]/50 italic">
+            <span className="text-xs text-[var(--color-text)]/50 italic">
               Em breve
             </span>
           )}

@@ -34,12 +34,11 @@ html.lenis body {
   --horizontal-margin-spacing: 1rem;
 
   /* Dynamic site colors (overridden via Payload CMS) */
-  --color-primary: #ac5b30;
-  --color-secondary: #6d4635;
-  --color-accent: #fefaf6;
-  --color-text-primary: #6d4635;
-  --color-text-secondary: #ac5b30;
+  --color-title: #ac5b30;
+  --color-subtitle: #6d4635;
   --color-background: #fefaf6;
+  --color-button: #ac5b30;
+  --color-text: #6d4635;
 
   /* #fefaf6 ≈ hsl(30, 80%, 98%) */
   --background: 30 80% 98%;

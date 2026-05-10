@@ -74,12 +74,11 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       weddingDate: '2026-09-06T00:00:00.000Z',
       countdownEnabled: true,
       colors: {
-        primaryColor: '#ac5b30',
-        secondaryColor: '#6d4635',
-        accentColor: '#fefaf6',
-        textPrimaryColor: '#6d4635',
-        textSecondaryColor: '#ac5b30',
+        titleColor: '#ac5b30',
+        subtitleColor: '#6d4635',
         backgroundColor: '#fefaf6',
+        buttonColor: '#ac5b30',
+        textColor: '#6d4635',
       },
       fonts: {
         fontType: 'custom',

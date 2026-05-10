@@ -43,7 +43,7 @@ export default function DressCodeSection({ content }: DressCodeSectionProps): Re
       <div className="pointer-events-none absolute inset-0">
         <div
           aria-hidden
-          className="absolute left-0 top-0 h-[108%] w-[72%] bg-[var(--color-primary)] [clip-path:ellipse(92%_80%_at_0%_0%)] md:h-[116%] md:w-[62%] md:[clip-path:ellipse(90%_78%_at_0%_0%)] lg:w-[54%] lg:[clip-path:ellipse(88%_78%_at_0%_0%)]"
+          className="absolute left-0 top-0 h-[108%] w-[72%] bg-[var(--color-title)] [clip-path:ellipse(92%_80%_at_0%_0%)] md:h-[116%] md:w-[62%] md:[clip-path:ellipse(90%_78%_at_0%_0%)] lg:w-[54%] lg:[clip-path:ellipse(88%_78%_at_0%_0%)]"
         />
       </div>
 
@@ -65,32 +65,32 @@ export default function DressCodeSection({ content }: DressCodeSectionProps): Re
           style={{ y: textY }}
           className="lg:pl-6"
         >
-          <p className="text-xs font-migra uppercase tracking-[0.3em] text-[var(--color-text-secondary)]">
+          <p className="text-xs font-migra uppercase tracking-[0.3em] text-[var(--color-title)]">
             O que vestir
           </p>
-          <h2 className="mt-3 text-4xl font-semibold tracking-wide text-[var(--color-primary)] md:text-6xl">
+          <h2 className="mt-3 text-4xl font-semibold tracking-wide text-[var(--color-title)] md:text-6xl">
             DRESS CODE
           </h2>
-          <p className="mt-5 text-2xl font-migra italic text-[var(--color-secondary)]">{section.style}</p>
-          <p className="mt-4 max-w-xl text-base leading-7 text-[var(--color-text-primary)] md:text-[1.05rem]">
+          <p className="mt-5 text-2xl font-migra italic text-[var(--color-subtitle)]">{section.style}</p>
+          <p className="mt-4 max-w-xl text-base leading-7 text-[var(--color-text)] md:text-[1.05rem]">
             {section.description}
           </p>
 
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             <article className="rounded-2xl border border-[#e5d7ce] bg-white/55 p-4">
-              <div className="mb-3 flex items-center gap-2 text-[var(--color-primary)]">
+              <div className="mb-3 flex items-center gap-2 text-[var(--color-title)]">
                 <Shirt className="h-4 w-4" />
                 <h3 className="text-sm font-bold uppercase tracking-wide">Para elas</h3>
               </div>
-              <p className="text-sm leading-6 text-[var(--color-text-primary)] md:text-[0.95rem]">{section.forHer}</p>
+              <p className="text-sm leading-6 text-[var(--color-text)] md:text-[0.95rem]">{section.forHer}</p>
             </article>
 
             <article className="rounded-2xl border border-[#e5d7ce] bg-white/55 p-4">
-              <div className="mb-3 flex items-center gap-2 text-[var(--color-primary)]">
+              <div className="mb-3 flex items-center gap-2 text-[var(--color-title)]">
                 <User className="h-4 w-4" />
                 <h3 className="text-sm font-bold uppercase tracking-wide">Para eles</h3>
               </div>
-              <p className="text-sm leading-6 text-[var(--color-text-primary)] md:text-[0.95rem]">{section.forHim}</p>
+              <p className="text-sm leading-6 text-[var(--color-text)] md:text-[0.95rem]">{section.forHim}</p>
             </article>
           </div>
         </motion.div>

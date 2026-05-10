@@ -16,12 +16,12 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
 
           <h2
             className="mt-5 text-[2.6rem] leading-[0.95] md:text-[4.1rem]"
-            style={{ color: "var(--color-text-primary)" }}
+            style={{ color: "var(--color-text)" }}
           >
             Lista de
             <span
               className="block font-amoresa text-[3.1rem] md:mt-2 md:text-[4.5rem]"
-              style={{ color: "var(--color-secondary)" }}
+              style={{ color: "var(--color-subtitle)" }}
             >
               Presentes
             </span>
@@ -30,7 +30,7 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
           <p
             className="mt-7 max-w-lg text-base md:text-[1.05rem] md:leading-8"
             style={{
-              color: "var(--color-text-primary)",
+              color: "var(--color-text)",
               opacity: 0.88,
             }}
           >
@@ -42,8 +42,8 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
           <div className="mt-9 flex flex-wrap items-center gap-4 md:gap-5">
             <Button
               asChild
-              className="h-11 rounded-none px-6 text-[0.75rem] uppercase tracking-[0.12em] text-white shadow-md transition hover:brightness-95"
-              style={{ backgroundColor: "var(--color-secondary)" }}
+              className="h-11 rounded-full px-6 text-[0.75rem] uppercase tracking-[0.12em] text-white shadow-md transition hover:brightness-95"
+              style={{ backgroundColor: "var(--color-button)" }}
             >
               <a href="/lista-de-presentes">Sugestões de Presentes</a>
             </Button>
@@ -51,7 +51,7 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
             <span
               className="hidden h-px w-20 md:block"
               style={{
-                backgroundColor: "var(--color-secondary)",
+                backgroundColor: "var(--color-subtitle)",
                 opacity: 0.35,
               }}
             />
@@ -62,14 +62,14 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
           <div
             className="pointer-events-none absolute -left-4 -top-4 hidden h-full w-full border md:block"
             style={{
-              borderColor: "var(--color-secondary)",
+              borderColor: "var(--color-subtitle)",
               opacity: 0.22,
             }}
           />
 
           <div
             className="relative overflow-hidden border bg-white p-3 md:p-4 shadow-[0_30px_56px_-34px_rgba(0,0,0,0.65)]"
-            style={{ borderColor: "var(--color-secondary)" }}
+            style={{ borderColor: "var(--color-subtitle)" }}
           >
             <div className="aspect-[4/5] overflow-hidden">
               <PayloadMediaRenderer
@@ -82,18 +82,18 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
 
           <div
             className="absolute -bottom-8 left-0 max-w-[90%] -translate-x-2 border bg-white/95 p-4 shadow-xl backdrop-blur-sm md:max-w-[72%] md:-translate-x-6 md:p-5"
-            style={{ borderColor: "var(--color-secondary)" }}
+            style={{ borderColor: "var(--color-subtitle)" }}
           >
             <p
               className="text-xl leading-none md:text-[1.7rem]"
-              style={{ color: "var(--color-secondary)" }}
+              style={{ color: "var(--color-subtitle)" }}
             >
               Com Amor,
             </p>
             <p
               className="mt-2 text-sm md:text-[0.95rem]"
               style={{
-                color: "var(--color-text-primary)",
+                color: "var(--color-text)",
                 opacity: 0.8,
               }}
             >

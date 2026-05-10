@@ -64,7 +64,7 @@ export default async function ListaDePresentes(): Promise<React.JSX.Element> {
           <GiftGrid gifts={gifts} defaultPaymentLink={defaultPaymentLink} />
         ) : (
           <div className="text-center py-20">
-            <p className="text-[var(--color-text-primary)] text-lg">
+            <p className="text-[var(--color-text)] text-lg">
               A lista de presentes será disponibilizada em breve.
             </p>
           </div>

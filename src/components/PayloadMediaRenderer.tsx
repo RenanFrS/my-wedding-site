@@ -105,8 +105,8 @@ export default function PayloadMediaRenderer({
   if (!src) {
     return (
       <div className={className}>
-        <div className="h-full w-full bg-[var(--color-accent)] flex items-center justify-center px-4 text-center">
-          <span className="text-xs md:text-sm tracking-wide uppercase text-[var(--color-text-primary)]/70">
+        <div className="h-full w-full bg-[var(--color-background)] flex items-center justify-center px-4 text-center">
+          <span className="text-xs md:text-sm tracking-wide uppercase text-[var(--color-text)]/70">
             {emptyMessage}
           </span>
         </div>

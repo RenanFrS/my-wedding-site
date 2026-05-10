@@ -120,12 +120,11 @@ export interface SiteCouple {
 }
 
 export interface SiteColors {
-  primaryColor: string;
-  secondaryColor: string;
-  accentColor: string;
-  textPrimaryColor: string;
-  textSecondaryColor: string;
+  titleColor: string;
+  subtitleColor: string;
   backgroundColor: string;
+  buttonColor: string;
+  textColor: string;
 }
 
 export interface SiteSettings {

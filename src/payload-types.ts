@@ -697,14 +697,25 @@ export interface SiteSetting {
   countdownEnabled?: boolean | null;
   colors: {
     /**
-     * Cor principal do site (ex: #ac5b30). Use o formato hexadecimal.
+     * Aplicada nas chamadas/headings principais (h1, h2).
      */
-    primaryColor: string;
-    secondaryColor: string;
-    accentColor: string;
-    textPrimaryColor: string;
-    textSecondaryColor: string;
+    titleColor: string;
+    /**
+     * Aplicada em subtítulos e detalhes secundários.
+     */
+    subtitleColor: string;
+    /**
+     * Cor de fundo geral das seções.
+     */
     backgroundColor: string;
+    /**
+     * Cor dos botões principais (CTAs).
+     */
+    buttonColor: string;
+    /**
+     * Cor dos textos corridos / parágrafos.
+     */
+    textColor: string;
   };
   fonts: {
     fontType: 'google' | 'custom';
@@ -764,12 +775,11 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   colors?:
     | T
     | {
-        primaryColor?: T;
-        secondaryColor?: T;
-        accentColor?: T;
-        textPrimaryColor?: T;
-        textSecondaryColor?: T;
+        titleColor?: T;
+        subtitleColor?: T;
         backgroundColor?: T;
+        buttonColor?: T;
+        textColor?: T;
       };
   fonts?:
     | T
