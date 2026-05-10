@@ -65,8 +65,6 @@ export default function HomePageClient({
       <div className="relative w-screen">
         <div className="w-screen">
           <Skiper30 mediaItems={carouselMedia} />
-          <Quote />
-          <Hands media={middleMedia} />
           <div className="relative z-20 -mt-16 md:-mt-24 rounded-t-[2rem] md:rounded-t-[3.5rem] bg-[var(--color-background)] pt-6 md:pt-10">
             <Stay media={ceremonyMedia} />
           </div>
