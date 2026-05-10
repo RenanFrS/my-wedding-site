@@ -51,6 +51,7 @@ export default function Hero({
           media={media}
           className="h-full w-full object-cover"
           videoLoading="eager"
+          coverMode
           emptyMessage="Inserir no seu painel: Background Media > Hero"
         />
       </div>

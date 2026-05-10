@@ -12,7 +12,7 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
   return (
     <section id="presenca" className="relative hz-margin py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-        <div className="registry-container reveal">
+        <div className="registry-container reveal flex flex-col items-center text-center lg:items-start lg:text-left">
 
           <h2
             className="mt-5 text-[2.6rem] leading-[0.95] md:text-[4.1rem]"
@@ -39,7 +39,7 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
             as sugestões que preparamos com muito carinho.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-4 md:gap-5">
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-4 md:gap-5 lg:justify-start">
             <Button
               asChild
               className="h-11 rounded-full px-6 text-[0.75rem] uppercase tracking-[0.12em] text-white shadow-md transition hover:brightness-95"
@@ -49,7 +49,7 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
             </Button>
 
             <span
-              className="hidden h-px w-20 md:block"
+              className="hidden h-px w-20 md:hidden lg:block"
               style={{
                 backgroundColor: "var(--color-subtitle)",
                 opacity: 0.35,

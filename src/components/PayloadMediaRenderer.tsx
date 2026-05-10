@@ -12,6 +12,11 @@ interface PayloadMediaRendererProps {
   mutedVideo?: boolean;
   loopVideo?: boolean;
   videoLoading?: 'eager' | 'lazy';
+  /**
+   * Quando true, força <video> nativo com object-cover ao invés do iframe Cloudinary Player.
+   * Use em backgrounds (Hero etc.) onde o vídeo precisa preencher 100% sem letterboxing.
+   */
+  coverMode?: boolean;
 }
 
 function resolveMediaURL(media?: PayloadMedia | null): string {
@@ -98,9 +103,10 @@ export default function PayloadMediaRenderer({
   mutedVideo = true,
   loopVideo = true,
   videoLoading = 'lazy',
+  coverMode = false,
 }: PayloadMediaRendererProps): React.JSX.Element {
   const src = resolveMediaURL(media);
-  const cloudinaryPlayerURL = buildCloudinaryPlayerURL(media);
+  const cloudinaryPlayerURL = coverMode ? null : buildCloudinaryPlayerURL(media);
 
   if (!src) {
     return (
