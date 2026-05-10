@@ -4,7 +4,6 @@ import type {
   BackgroundMedia,
   DressCodeContent,
   GiftItem,
-  Guest,
   PayloadListResponse,
 } from '@/types';
 import { headers } from 'next/headers';
@@ -156,29 +155,3 @@ export async function getGiftList(): Promise<GiftItem[]> {
   }
 }
 
-// ── Guests ──
-
-export async function getGuests(): Promise<Guest[]> {
-  try {
-    const data = await payloadFetch<PayloadListResponse<Guest>>(
-      '/guests?limit=500&sort=name'
-    );
-    return data.docs;
-  } catch {
-    return [];
-  }
-}
-
-export async function confirmGuest(
-  guestId: string,
-  confirmed: boolean
-): Promise<Guest | null> {
-  try {
-    return await payloadFetch<Guest>(`/guests/${guestId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ confirmed }),
-    });
-  } catch {
-    return null;
-  }
-}

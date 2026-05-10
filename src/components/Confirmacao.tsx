@@ -22,11 +22,6 @@ interface ConfirmarFormProps {
   onDecline: (guest: Guest) => void;
 }
 
-interface InfoBadgeProps {
-  title: string;
-  text: string;
-}
-
 type Step = "search" | "detail" | "done";
 
 export default function Confirmacao(): React.JSX.Element {
@@ -241,25 +236,8 @@ export default function Confirmacao(): React.JSX.Element {
           )}
         </div>
 
-        {/* Info footer (contact / deadline) */}
-        {/* <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 text-[#6d4635]">
-          <InfoBadge title="Contato" text="convites@renan-e-heloisa.com" />
-          <InfoBadge title="Prazo" text="10 de Agosto de 2026" />
-          <InfoBadge title="Status" text="Formulário ativo" />
-        </div> */}
       </div>
     </section>
-  );
-}
-
-function InfoBadge({ title, text }: InfoBadgeProps): React.JSX.Element {
-  return (
-    <div className="text-center">
-      <div className="uppercase tracking-wider text-[10px] font-semibold text-[#ac5b30]/80 mb-1">
-        {title}
-      </div>
-      <div className="font-sans text-xs md:text-sm">{text}</div>
-    </div>
   );
 }
 

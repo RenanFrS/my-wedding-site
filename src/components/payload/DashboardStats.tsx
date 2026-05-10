@@ -2,43 +2,62 @@
 
 import React, { useEffect, useState } from 'react';
 
-interface GuestStats {
-  total: number;
+interface RSVPStats {
+  totalGroups: number;
+  totalMembers: number;
   confirmed: number;
+  declined: number;
   pending: number;
-  totalDependents: number;
+}
+
+interface RSVPMember {
+  status?: 'pending' | 'confirmed' | 'declined';
+}
+
+interface RSVPDoc {
+  members?: RSVPMember[];
 }
 
 const DashboardStats: React.FC = () => {
-  const [stats, setStats] = useState<GuestStats>({
-    total: 0,
+  const [stats, setStats] = useState<RSVPStats>({
+    totalGroups: 0,
+    totalMembers: 0,
     confirmed: 0,
+    declined: 0,
     pending: 0,
-    totalDependents: 0,
   });
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchStats(): Promise<void> {
       try {
-        const res = await fetch('/api/guests?limit=0');
+        const res = await fetch('/api/rsvps?limit=500&depth=0');
         const data = await res.json();
-        const guests = data.docs || [];
+        const groups: RSVPDoc[] = data.docs || [];
 
-        const total = guests.length;
-        const confirmed = guests.filter(
-          (g: { confirmed?: boolean }) => g.confirmed
-        ).length;
-        const pending = total - confirmed;
-        const totalDependents = guests.reduce(
-          (sum: number, g: { dependents?: unknown[] }) =>
-            sum + (g.dependents?.length || 0),
-          0
-        );
+        let totalMembers = 0;
+        let confirmed = 0;
+        let declined = 0;
+        let pending = 0;
 
-        setStats({ total, confirmed, pending, totalDependents });
+        for (const group of groups) {
+          for (const member of group.members || []) {
+            totalMembers++;
+            if (member.status === 'confirmed') confirmed++;
+            else if (member.status === 'declined') declined++;
+            else pending++;
+          }
+        }
+
+        setStats({
+          totalGroups: groups.length,
+          totalMembers,
+          confirmed,
+          declined,
+          pending,
+        });
       } catch (err) {
-        console.error('Failed to fetch guest stats:', err);
+        console.error('Failed to fetch RSVP stats:', err);
       } finally {
         setLoading(false);
       }
@@ -56,19 +75,20 @@ const DashboardStats: React.FC = () => {
   }
 
   const confirmedPercent =
-    stats.total > 0 ? Math.round((stats.confirmed / stats.total) * 100) : 0;
+    stats.totalMembers > 0 ? Math.round((stats.confirmed / stats.totalMembers) * 100) : 0;
+  const declinedPercent =
+    stats.totalMembers > 0 ? Math.round((stats.declined / stats.totalMembers) * 100) : 0;
   const pendingPercent =
-    stats.total > 0 ? Math.round((stats.pending / stats.total) * 100) : 0;
+    stats.totalMembers > 0 ? Math.round((stats.pending / stats.totalMembers) * 100) : 0;
 
   return (
     <div className="p-6 space-y-6">
       <h2 className="text-xl font-semibold text-gray-800">
-        📊 Resumo dos Convidados
+        Resumo das Confirmações (RSVP)
       </h2>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total de Convidados" value={stats.total} color="#6d4635" />
+        <StatCard label="Grupos / Famílias" value={stats.totalGroups} color="#6d4635" />
         <StatCard
           label="Confirmados"
           value={stats.confirmed}
@@ -82,17 +102,17 @@ const DashboardStats: React.FC = () => {
           suffix={` (${pendingPercent}%)`}
         />
         <StatCard
-          label="Total Acompanhantes"
-          value={stats.totalDependents}
-          color="#7c3aed"
+          label="Não comparecerão"
+          value={stats.declined}
+          color="#dc2626"
+          suffix={` (${declinedPercent}%)`}
         />
       </div>
 
-      {/* Simple Bar Chart */}
-      {stats.total > 0 && (
+      {stats.totalMembers > 0 && (
         <div className="space-y-3">
           <h3 className="text-sm font-medium text-gray-600">
-            Confirmados vs Pendentes
+            Distribuição por status ({stats.totalMembers} convidados)
           </h3>
           <div className="flex h-8 rounded-full overflow-hidden bg-gray-100">
             <div
@@ -107,6 +127,12 @@ const DashboardStats: React.FC = () => {
             >
               {pendingPercent > 10 && `${pendingPercent}%`}
             </div>
+            <div
+              className="bg-red-500 transition-all duration-500 flex items-center justify-center text-xs text-white font-medium"
+              style={{ width: `${declinedPercent}%` }}
+            >
+              {declinedPercent > 10 && `${declinedPercent}%`}
+            </div>
           </div>
           <div className="flex gap-4 text-xs text-gray-500">
             <span className="flex items-center gap-1">
@@ -116,6 +142,10 @@ const DashboardStats: React.FC = () => {
             <span className="flex items-center gap-1">
               <span className="w-3 h-3 rounded-full bg-amber-500 inline-block" />
               Pendentes
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 rounded-full bg-red-500 inline-block" />
+              Não comparecerão
             </span>
           </div>
         </div>

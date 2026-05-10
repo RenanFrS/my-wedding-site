@@ -9,7 +9,7 @@ export default function PartingMessage(): React.JSX.Element {
         Esperamos você
       </h1> */}
       <Button asChild className="mx-auto w-[325px]">
-        <a href="http://instagra.com/renanrocha.01/">Confirme Presença</a>
+        <a href="#confirmacao">Confirme Presença</a>
       </Button>
     </div>
   );

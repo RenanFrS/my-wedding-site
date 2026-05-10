@@ -173,15 +173,3 @@ export interface CounterProps {
   digitStyle?: React.CSSProperties;
 }
 
-export interface GiftCardProps {
-  item: GiftItem;
-  defaultPaymentLink?: string;
-}
-
-export interface CountdownValues {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  isExpired: boolean;
-}
