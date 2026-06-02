@@ -144,7 +144,7 @@ const Skiper30: React.FC<Skiper30Props> = ({ mediaItems }) => {
       <section id="galeria" className="w-full bg-white px-4 py-16">
         <div className="mx-auto max-w-3xl rounded-xl border border-[#ac5b30]/30 bg-[#fefaf6] px-6 py-10 text-center">
           <p className="text-sm uppercase tracking-[0.2em] text-[#6d4635]">
-            Inserir no seu painel: Vertical Carousel Media
+            Inserir no painel: Carrossel de Fotos (Vertical Carousel Media)
           </p>
         </div>
       </section>

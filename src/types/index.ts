@@ -4,25 +4,6 @@
 
 // ---- Payload Collection Types ----
 
-/** Dependent of a guest */
-export interface Dependent {
-  name: string;
-  age: number;
-  type: 'spouse' | 'child' | 'other';
-}
-
-/** Guest collection document */
-export interface Guest {
-  id: string;
-  name: string;
-  email?: string;
-  phone?: string;
-  confirmed: boolean;
-  dependents?: Dependent[];
-  createdAt: string;
-  updatedAt: string;
-}
-
 /** Media object from Payload uploads */
 export interface PayloadMedia {
   id: string;
@@ -61,7 +42,7 @@ export interface VerticalCarouselMedia {
 export interface BackgroundMedia {
   id: string;
   media: PayloadMedia;
-  location: 'hero' | 'middle' | 'section1' | 'section2' | 'section3';
+  location: 'hero' | 'section1' | 'section2' | 'section3';
   active: boolean;
   createdAt: string;
   updatedAt: string;

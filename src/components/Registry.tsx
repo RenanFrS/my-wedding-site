@@ -75,7 +75,7 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
               <PayloadMediaRenderer
                 media={media}
                 className="h-full w-full object-cover"
-                emptyMessage="Inserir no seu painel: Background Media > Seção 2"
+                emptyMessage="Inserir no painel: Fotos de Fundo > Fundo da seção de presentes"
               />
             </div>
           </div>

@@ -2,10 +2,15 @@ import type { CollectionConfig } from 'payload';
 
 export const BackgroundMedia: CollectionConfig = {
   slug: 'background-media',
+  labels: {
+    singular: 'Foto de Fundo',
+    plural: 'Fotos de Fundo',
+  },
   admin: {
     useAsTitle: 'location',
     defaultColumns: ['location', 'media', 'active'],
-    description: 'Imagens de fundo para seções do site (Hero, meio, etc.).',
+    description:
+      'Fotos de fundo de cada parte do site. Escolha em "Onde aparece" o local da foto.',
   },
   access: {
     read: () => true,
@@ -21,14 +26,13 @@ export const BackgroundMedia: CollectionConfig = {
     {
       name: 'location',
       type: 'select',
-      label: 'Localização',
+      label: 'Onde aparece',
       required: true,
       options: [
-        { label: 'Hero (Topo)', value: 'hero' },
-        { label: 'Meio do Site', value: 'middle' },
-        { label: 'Seção 1', value: 'section1' },
-        { label: 'Seção 2', value: 'section2' },
-        { label: 'Seção 3', value: 'section3' },
+        { label: 'Foto principal (topo do site)', value: 'hero' },
+        { label: 'Fundo da seção da cerimônia', value: 'section1' },
+        { label: 'Fundo da seção de presentes', value: 'section2' },
+        { label: 'Fundo da página Lista de Presentes', value: 'section3' },
       ],
     },
     {

@@ -56,7 +56,7 @@ export default function DressCodeSection({ content }: DressCodeSectionProps): Re
             media={section.media}
             alt="Referencias de vestimenta"
             className="h-[360px] w-full object-contain md:h-[560px]"
-            emptyMessage="Inserir no painel: Dress Code > Imagem de referencia"
+            emptyMessage="Inserir no painel: Dress Code > Imagem de referência"
             videoLoading="eager"
           />
         </motion.div>

@@ -69,7 +69,6 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    guests: Guest;
     'vertical-carousel-media': VerticalCarouselMedia;
     'background-media': BackgroundMedia;
     'dress-code': DressCode;
@@ -85,7 +84,6 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    guests: GuestsSelect<false> | GuestsSelect<true>;
     'vertical-carousel-media': VerticalCarouselMediaSelect<false> | VerticalCarouselMediaSelect<true>;
     'background-media': BackgroundMediaSelect<false> | BackgroundMediaSelect<true>;
     'dress-code': DressCodeSelect<false> | DressCodeSelect<true>;
@@ -248,29 +246,6 @@ export interface Media {
   focalY?: number | null;
 }
 /**
- * Lista de convidados do casamento.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "guests".
- */
-export interface Guest {
-  id: number;
-  name: string;
-  email?: string | null;
-  phone?: string | null;
-  confirmed?: boolean | null;
-  dependents?:
-    | {
-        name: string;
-        age: number;
-        type: 'spouse' | 'child' | 'other';
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Imagens do carrossel vertical (galeria parallax / Skiper30).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -285,7 +260,7 @@ export interface VerticalCarouselMedia {
   createdAt: string;
 }
 /**
- * Imagens de fundo para seções do site (Hero, meio, etc.).
+ * Fotos de fundo de cada parte do site. Escolha em "Onde aparece" o local da foto.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "background-media".
@@ -293,7 +268,7 @@ export interface VerticalCarouselMedia {
 export interface BackgroundMedia {
   id: number;
   media: number | Media;
-  location: 'hero' | 'middle' | 'section1' | 'section2' | 'section3';
+  location: 'hero' | 'section1' | 'section2' | 'section3';
   active?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -336,7 +311,7 @@ export interface GiftList {
   createdAt: string;
 }
 /**
- * Controle de confirmação por família/grupo e disparo de lembretes para quem ainda está pendente.
+ * Cadastro único de grupos/famílias: titular + agregados, código de segurança e disparo do convite por WhatsApp.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rsvps".
@@ -344,20 +319,32 @@ export interface GiftList {
 export interface Rsvp {
   id: number;
   groupName: string;
+  /**
+   * Apenas números, com DDD. Ex: 11999998888
+   */
   phone: string;
   /**
-   * Quantidade de convidados desse grupo que ainda não confirmaram presença.
+   * Quantidade de convidados desse grupo que ainda não confirmaram.
    */
   pendingCount?: number | null;
   members?:
     | {
         name: string;
+        role: 'titular' | 'agregado';
         status?: ('pending' | 'confirmed' | 'declined') | null;
         id?: string | null;
       }[]
     | null;
   token?: string | null;
   securityCode?: string | null;
+  /**
+   * Controle do disparo automático do convite.
+   */
+  whatsapp?: {
+    status?: ('not_sent' | 'sent' | 'failed') | null;
+    sentAt?: string | null;
+    lastError?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -407,10 +394,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
-      } | null)
-    | ({
-        relationTo: 'guests';
-        value: number | Guest;
       } | null)
     | ({
         relationTo: 'vertical-carousel-media';
@@ -540,26 +523,6 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "guests_select".
- */
-export interface GuestsSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  confirmed?: T;
-  dependents?:
-    | T
-    | {
-        name?: T;
-        age?: T;
-        type?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "vertical-carousel-media_select".
  */
 export interface VerticalCarouselMediaSelect<T extends boolean = true> {
@@ -620,11 +583,19 @@ export interface RsvpsSelect<T extends boolean = true> {
     | T
     | {
         name?: T;
+        role?: T;
         status?: T;
         id?: T;
       };
   token?: T;
   securityCode?: T;
+  whatsapp?:
+    | T
+    | {
+        status?: T;
+        sentAt?: T;
+        lastError?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

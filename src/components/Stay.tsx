@@ -34,7 +34,7 @@ export default function Stay({ media = null }: StayProps): React.JSX.Element {
               media={media}
               alt="Local da cerimônia"
               className="w-full h-full object-cover"
-              emptyMessage="Inserir no seu painel: Background Media > Seção 1"
+              emptyMessage="Inserir no painel: Fotos de Fundo > Fundo da seção da cerimônia"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
           </div>

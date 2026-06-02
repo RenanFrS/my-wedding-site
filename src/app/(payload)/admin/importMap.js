@@ -1,4 +1,5 @@
-import { default as default_acc28a81627091881fdf576a065fd4dd } from '@/components/payload/WhatsAppMessage'
+import { default as default_ffeb0b2a284666202b8af57a1fb474dd } from '@/components/payload/SendInvite'
+import { default as default_b9ae5a6fdbcc59cadf06a2522a708c38 } from '@/components/payload/RsvpListActions'
 import { default as default_78e2240968210678f3f3ce1fd6e57ff1 } from '@/components/payload/ColorPicker'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -27,7 +28,8 @@ import { default as default_6e8b574f03046afd47529156de827612 } from '@/component
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
-  "@/components/payload/WhatsAppMessage#default": default_acc28a81627091881fdf576a065fd4dd,
+  "@/components/payload/SendInvite#default": default_ffeb0b2a284666202b8af57a1fb474dd,
+  "@/components/payload/RsvpListActions#default": default_b9ae5a6fdbcc59cadf06a2522a708c38,
   "@/components/payload/ColorPicker#default": default_78e2240968210678f3f3ce1fd6e57ff1,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,

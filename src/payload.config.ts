@@ -11,7 +11,6 @@ import { fileURLToPath } from 'url';
 // Collections
 import { Users } from './collections/Users';
 import { Media } from './collections/Media';
-import { Guests } from './collections/Guests';
 import { VerticalCarouselMedia } from './collections/VerticalCarouselMedia';
 import { BackgroundMedia } from './collections/BackgroundMedia';
 import { DressCode } from './collections/DressCode';
@@ -133,7 +132,6 @@ export default buildConfig({
   collections: [
     Users,
     Media,
-    Guests,
     VerticalCarouselMedia,
     BackgroundMedia,
     DressCode,

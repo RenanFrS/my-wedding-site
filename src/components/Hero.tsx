@@ -52,7 +52,7 @@ export default function Hero({
           className="h-full w-full object-cover"
           videoLoading="eager"
           coverMode
-          emptyMessage="Inserir no seu painel: Background Media > Hero"
+          emptyMessage="Inserir no painel: Fotos de Fundo > Foto principal (topo do site)"
         />
       </div>
       {/* Gradient fixed at hero bottom using site background color */}

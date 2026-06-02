@@ -5,11 +5,8 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Timeline from '@/components/Timeline';
 import Skiper30 from '@/components/Skiper30';
-import Quote from '@/components/Quote';
-import Hands from '@/components/Hands';
 import Stay from '@/components/Stay';
 import DressCodeSection from '@/components/DressCodeSection';
-import Confirmacao from '@/components/Confirmacao';
 import MensagemNoivos from '@/components/MensagemNoivos';
 import Registry from '@/components/Registry';
 import PartingMessage from '@/components/PartingMessage';
@@ -25,7 +22,6 @@ interface HomePageClientProps {
   weddingDateText: string;
   countdownEnabled: boolean;
   heroMedia: PayloadMedia | null;
-  middleMedia: PayloadMedia | null;
   ceremonyMedia: PayloadMedia | null;
   registryMedia: PayloadMedia | null;
   carouselMedia: PayloadMedia[];
@@ -40,7 +36,6 @@ export default function HomePageClient({
   weddingDateText,
   countdownEnabled,
   heroMedia,
-  middleMedia,
   ceremonyMedia,
   registryMedia,
   carouselMedia,
@@ -69,7 +64,6 @@ export default function HomePageClient({
             <Stay media={ceremonyMedia} />
           </div>
           <DressCodeSection content={dressCode} />
-          <Confirmacao />
           <MensagemNoivos />
           <section id="presentes">
             <Registry media={registryMedia} />

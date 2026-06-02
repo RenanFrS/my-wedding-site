@@ -64,7 +64,6 @@ export default async function Page(): Promise<React.JSX.Element> {
       weddingDateText={weddingDateText}
       countdownEnabled={settings.countdownEnabled}
       heroMedia={getMediaByLocation('hero')}
-      middleMedia={getMediaByLocation('middle')}
       ceremonyMedia={getMediaByLocation('section1')}
       registryMedia={getMediaByLocation('section2')}
       carouselMedia={carouselMedia}

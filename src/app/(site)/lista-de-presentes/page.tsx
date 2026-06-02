@@ -44,7 +44,7 @@ export default async function ListaDePresentes(): Promise<React.JSX.Element> {
           <PayloadMediaRenderer
             media={bannerMedia}
             className="h-full w-full object-cover"
-            emptyMessage="Inserir no seu painel: Background Media > Seção 3"
+            emptyMessage="Inserir no painel: Fotos de Fundo > Fundo da página Lista de Presentes"
           />
         </div>
         <div className="absolute inset-0 bg-black/30" />
