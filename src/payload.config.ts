@@ -40,14 +40,21 @@ parsedDatabaseURL.searchParams.delete('sslkey');
 const databaseConnectionString = parsedDatabaseURL.toString();
 const databaseCaCert = process.env.PAYLOAD_DATABASE_CA_CERT;
 const databaseCaCertPath = process.env.PAYLOAD_DATABASE_CA_CERT_PATH;
-const databaseSslRejectUnauthorized =
-  process.env.PAYLOAD_DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false';
 
 const databaseCaValue = databaseCaCert
   ? databaseCaCert.replace(/\\n/g, '\n')
   : databaseCaCertPath
     ? fs.readFileSync(path.resolve(process.cwd(), databaseCaCertPath), 'utf8')
     : undefined;
+
+// `sslmode=require` (semântica do Postgres/libpq) = criptografar SEM verificar o
+// certificado. Por padrão NÃO fazemos verificação estrita — assim provedores
+// gerenciados como o Neon funcionam em ambientes serverless (Vercel) que nem
+// sempre conseguem montar a cadeia do certificado. A verificação estrita só é
+// ligada se um CA for fornecido ou se PAYLOAD_DATABASE_SSL_REJECT_UNAUTHORIZED=true.
+const databaseSslRejectUnauthorized =
+  process.env.PAYLOAD_DATABASE_SSL_REJECT_UNAUTHORIZED === 'true' ||
+  Boolean(databaseCaValue);
 
 const databaseSslConfig = isDatabaseSslDisabled
   ? false
