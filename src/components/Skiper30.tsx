@@ -216,7 +216,7 @@ const Column = React.forwardRef<HTMLDivElement, ColumnProps>(
     return (
       <div
         ref={ref}
-        className={`relative ${getTopPosition()} flex h-full ${isMobile ? "w-1/3" : "w-1/4"} min-w-[150px] md:min-w-[250px] flex-col gap-[2vw]`}
+        className={`relative ${getTopPosition()} flex h-full ${isMobile ? "w-1/3" : "w-1/4"} min-w-[150px] md:min-w-[250px] flex-col gap-[2vw] will-change-transform`}
       >
         {mediaItems.map((media, i) => (
           <div

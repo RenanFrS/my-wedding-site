@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { useParallax } from '@/components/hooks/useParallax';
+import React, { useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import PayloadMediaRenderer from '@/components/PayloadMediaRenderer';
 import type { PayloadMedia } from '@/types';
@@ -18,23 +17,6 @@ export default function Hero({
   media = null,
 }: HeroProps): React.JSX.Element {
   const bgRef = useRef<HTMLDivElement>(null);
-  const [parallaxEnabled, setParallaxEnabled] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Enable parallax only on wider screens (e.g., >= 768px)
-    const check = (): void => setParallaxEnabled(window.innerWidth >= 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  useParallax(bgRef, {
-    axis: 'y',
-    factor: -0.1,
-    offset: 0,
-    startAt: 0,
-    enabled: parallaxEnabled,
-  });
 
   const scrollToNext = (): void => {
     const next =

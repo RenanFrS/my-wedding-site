@@ -29,35 +29,41 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
   const [visible, setVisible] = useState<boolean>(true); // Começa visível
 
   useEffect(() => {
-    const onScroll = (): void => {
+    let ticking = false;
+    let timeline: HTMLElement | null = document.getElementById('timeline');
+
+    // O trabalho (leitura de layout + setState) roda no máximo 1x por frame,
+    // via requestAnimationFrame, em vez de a cada evento de scroll do Lenis.
+    const update = (): void => {
+      ticking = false;
       const scrollY: number = window.scrollY;
       setScrolled(scrollY > 8);
 
-      // Mostrar navbar no topo (Hero) e depois do Timeline
-      const timeline: HTMLElement | null = document.getElementById('timeline');
+      if (!timeline) timeline = document.getElementById('timeline');
+      if (!timeline) return;
 
-      if (timeline) {
-        const rect: DOMRect = timeline.getBoundingClientRect();
-        const heroHeight: number = window.innerHeight; // Altura aproximada do Hero
+      const rect: DOMRect = timeline.getBoundingClientRect();
+      const heroHeight: number = window.innerHeight;
 
-        // Visível no Hero (primeiros pixels) OU quando chegar no Timeline
-        if (scrollY < 50) {
-          // Início da página - navbar visível
-          setVisible(true);
-        } else if (scrollY < heroHeight - 100) {
-          // Durante o Hero - navbar some gradualmente
-          setVisible(false);
-        } else if (rect.top <= 100) {
-          // Quando chega no Timeline - navbar aparece
-          setVisible(true);
-        } else {
-          // Entre Hero e Timeline - navbar escondido
-          setVisible(false);
-        }
+      if (scrollY < 50) {
+        setVisible(true);
+      } else if (scrollY < heroHeight - 100) {
+        setVisible(false);
+      } else if (rect.top <= 100) {
+        setVisible(true);
+      } else {
+        setVisible(false);
       }
     };
 
-    onScroll();
+    const onScroll = (): void => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
