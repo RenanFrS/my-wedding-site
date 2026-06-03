@@ -41,31 +41,33 @@ const databaseConnectionString = parsedDatabaseURL.toString();
 const databaseCaCert = process.env.PAYLOAD_DATABASE_CA_CERT;
 const databaseCaCertPath = process.env.PAYLOAD_DATABASE_CA_CERT_PATH;
 
-const databaseCaValue = databaseCaCert
-  ? databaseCaCert.replace(/\\n/g, '\n')
-  : databaseCaCertPath
-    ? fs.readFileSync(path.resolve(process.cwd(), databaseCaCertPath), 'utf8')
-    : undefined;
+let databaseCaValue: string | undefined;
+try {
+  databaseCaValue = databaseCaCert
+    ? databaseCaCert.replace(/\\n/g, '\n')
+    : databaseCaCertPath
+      ? fs.readFileSync(path.resolve(process.cwd(), databaseCaCertPath), 'utf8')
+      : undefined;
+} catch {
+  // Caminho de CA inválido não deve derrubar a inicialização.
+  databaseCaValue = undefined;
+}
 
-// `sslmode=require` (semântica do Postgres/libpq) = criptografar SEM verificar o
-// certificado. Por padrão NÃO fazemos verificação estrita — assim provedores
-// gerenciados como o Neon funcionam em ambientes serverless (Vercel) que nem
-// sempre conseguem montar a cadeia do certificado. A verificação estrita só é
-// ligada se um CA for fornecido ou se PAYLOAD_DATABASE_SSL_REJECT_UNAUTHORIZED=true.
-const databaseSslRejectUnauthorized =
-  process.env.PAYLOAD_DATABASE_SSL_REJECT_UNAUTHORIZED === 'true' ||
+// `sslmode=require` (Postgres/libpq) = criptografar SEM verificar o certificado.
+// Provedores gerenciados como o Neon usam cert público; em serverless (Vercel) a
+// cadeia muitas vezes não é resolvível -> "unable to get local issuer certificate".
+// Por isso o PADRÃO é conexão criptografada SEM verificação estrita, e NÃO passamos
+// um CA custom (passar `ca` substitui o trust store do Node e quebra o Neon).
+// A verificação estrita só liga se VOCÊ pedir explicitamente: flag = 'true' E um CA.
+const databaseSslStrict =
+  process.env.PAYLOAD_DATABASE_SSL_REJECT_UNAUTHORIZED === 'true' &&
   Boolean(databaseCaValue);
 
 const databaseSslConfig = isDatabaseSslDisabled
   ? false
-  : {
-      rejectUnauthorized: databaseSslRejectUnauthorized,
-      ...(databaseCaValue
-        ? {
-            ca: databaseCaValue,
-          }
-        : {}),
-    };
+  : databaseSslStrict
+    ? { rejectUnauthorized: true, ca: databaseCaValue }
+    : { rejectUnauthorized: false };
 
 const isProduction = process.env.NODE_ENV === 'production';
 
