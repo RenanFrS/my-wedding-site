@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload';
 export const VerticalCarouselMedia: CollectionConfig = {
   slug: 'vertical-carousel-media',
   admin: {
+    group: 'Conteúdo do Site',
     useAsTitle: 'order',
     defaultColumns: ['media', 'order', 'active'],
     description: 'Imagens do carrossel vertical (galeria parallax / Skiper30).',

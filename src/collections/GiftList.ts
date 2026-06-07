@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload';
 export const GiftList: CollectionConfig = {
   slug: 'gift-list',
   admin: {
+    group: 'Convidados & Presentes',
     useAsTitle: 'title',
     defaultColumns: ['title', 'price', 'active'],
     description: 'Lista de presentes do casamento.',

@@ -19,14 +19,67 @@ interface PayloadMediaRendererProps {
   coverMode?: boolean;
 }
 
-function resolveMediaURL(media?: PayloadMedia | null): string {
-  return media?.url || media?.cloudinary?.secure_url || '';
-}
-
 function isVideo(media?: PayloadMedia | null): boolean {
   const mime = media?.mimeType?.toLowerCase() || '';
   const resourceType = media?.cloudinary?.resource_type?.toLowerCase() || '';
   return mime.startsWith('video/') || resourceType === 'video';
+}
+
+/**
+ * Injeta um segmento de transformação numa URL de entrega do Cloudinary
+ * (logo após `/upload/`). Retorna a URL original se não for do Cloudinary.
+ */
+function injectCloudinaryTransform(url: string, transform: string): string {
+  const marker = '/upload/';
+  const idx = url.indexOf(marker);
+  if (idx === -1) return url;
+  const head = url.slice(0, idx + marker.length);
+  const tail = url.slice(idx + marker.length);
+  return `${head}${transform}/${tail}`;
+}
+
+// Poster (1º frame) do vídeo de fundo. Apenas um placeholder mostrado por uma
+// fração de segundo até o vídeo começar — pode ser leve.
+const COVER_VIDEO_POSTER_TRANSFORM = 'so_0,f_auto,q_auto';
+
+/**
+ * Resolve a melhor URL de entrega da mídia. Prioriza o `secure_url` do
+ * Cloudinary (servido pela CDN, com range requests e cache de borda) em vez
+ * da rota local `/api/media/file/...`, que transmite pelo próprio servidor.
+ *
+ * Para o vídeo de fundo (`coverVideo`) usamos o ARQUIVO ORIGINAL, sem qualquer
+ * transform: preserva a qualidade original e evita o re-encode sob demanda do
+ * Cloudinary (que custava ~27s no primeiro acesso). O original já é servido pela
+ * CDN com range requests (HTTP 206), então o playback começa quase instantâneo.
+ * Imagens continuam com `f_auto,q_auto` (qualidade visualmente idêntica, menor).
+ */
+function resolveMediaURL(
+  media?: PayloadMedia | null,
+  coverVideo = false
+): string {
+  const secureURL = media?.cloudinary?.secure_url;
+  if (secureURL) {
+    if (coverVideo && isVideo(media)) {
+      return secureURL;
+    }
+    return injectCloudinaryTransform(secureURL, 'f_auto,q_auto');
+  }
+  return media?.url || '';
+}
+
+/**
+ * Gera um poster (1º frame) para vídeos do Cloudinary, trocando a extensão
+ * por `.jpg` e usando `so_0` (start offset 0). Permite paint instantâneo
+ * enquanto o vídeo carrega/autoplay inicia.
+ */
+function resolveVideoPosterURL(media?: PayloadMedia | null): string | undefined {
+  const secureURL = media?.cloudinary?.secure_url;
+  if (!secureURL || !isVideo(media)) return undefined;
+  const withTransform = injectCloudinaryTransform(
+    secureURL,
+    COVER_VIDEO_POSTER_TRANSFORM
+  );
+  return withTransform.replace(/\.(mp4|mov|webm|m4v|ogv|avi|mkv)(\?.*)?$/i, '.jpg$2');
 }
 
 function extractCloudinaryCloudName(media?: PayloadMedia | null): string {
@@ -105,8 +158,9 @@ export default function PayloadMediaRenderer({
   videoLoading = 'lazy',
   coverMode = false,
 }: PayloadMediaRendererProps): React.JSX.Element {
-  const src = resolveMediaURL(media);
+  const src = resolveMediaURL(media, coverMode);
   const cloudinaryPlayerURL = coverMode ? null : buildCloudinaryPlayerURL(media);
+  const videoPosterURL = resolveVideoPosterURL(media);
 
   if (!src) {
     return (
@@ -141,6 +195,7 @@ export default function PayloadMediaRenderer({
       <video
         className={className}
         src={src}
+        poster={videoPosterURL}
         playsInline
         muted={mutedVideo}
         loop={loopVideo}
@@ -151,5 +206,13 @@ export default function PayloadMediaRenderer({
     );
   }
 
-  return <img className={className} src={src} alt={alt || media?.alt || 'Mídia'} />;
+  return (
+    <img
+      className={className}
+      src={src}
+      alt={alt || media?.alt || 'Mídia'}
+      loading={videoLoading}
+      decoding="async"
+    />
+  );
 }

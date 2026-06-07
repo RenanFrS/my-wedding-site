@@ -115,6 +115,7 @@ export const Media: CollectionConfig = {
     mimeTypes: ['image/*', 'video/*'],
   },
   admin: {
+    group: 'Biblioteca',
     useAsTitle: 'alt',
     description: 'Repositório central de imagens e vídeos do site.',
   },

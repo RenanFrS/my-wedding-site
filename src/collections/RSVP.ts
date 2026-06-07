@@ -36,6 +36,7 @@ async function generateUniqueValue(
 export const RSVPs: CollectionConfig = {
   slug: 'rsvps',
   admin: {
+    group: 'Convidados & Presentes',
     useAsTitle: 'groupName',
     defaultColumns: ['groupName', 'pendingCount', 'phone', 'whatsapp', 'token'],
     description:

@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload';
 export const DressCode: CollectionConfig = {
   slug: 'dress-code',
   admin: {
+    group: 'Conteúdo do Site',
     useAsTitle: 'style',
     defaultColumns: ['style', 'active', 'updatedAt'],
     description: 'Conteúdo da seção de vestimenta (Dress Code).',

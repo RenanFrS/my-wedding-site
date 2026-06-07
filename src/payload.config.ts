@@ -139,14 +139,16 @@ export default buildConfig({
     },
   },
   collections: [
-    Users,
-    Media,
+    // Ordem do menu lateral. Os grupos aparecem na ordem da primeira
+    // collection de cada grupo; os itens, na ordem abaixo.
+    BackgroundMedia, // Conteúdo do Site
     VerticalCarouselMedia,
-    BackgroundMedia,
     DressCode,
-    GiftList,
-    RSVPs,
     CoupleMessages,
+    RSVPs, // Convidados & Presentes
+    GiftList,
+    Media, // Biblioteca
+    Users, // Sistema
   ],
   globals: [SiteSettings],
   editor: lexicalEditor(),

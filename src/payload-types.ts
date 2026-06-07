@@ -67,14 +67,14 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    media: Media;
-    'vertical-carousel-media': VerticalCarouselMedia;
     'background-media': BackgroundMedia;
+    'vertical-carousel-media': VerticalCarouselMedia;
     'dress-code': DressCode;
-    'gift-list': GiftList;
-    rsvps: Rsvp;
     'couple-messages': CoupleMessage;
+    rsvps: Rsvp;
+    'gift-list': GiftList;
+    media: Media;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,14 +82,14 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    'vertical-carousel-media': VerticalCarouselMediaSelect<false> | VerticalCarouselMediaSelect<true>;
     'background-media': BackgroundMediaSelect<false> | BackgroundMediaSelect<true>;
+    'vertical-carousel-media': VerticalCarouselMediaSelect<false> | VerticalCarouselMediaSelect<true>;
     'dress-code': DressCodeSelect<false> | DressCodeSelect<true>;
-    'gift-list': GiftListSelect<false> | GiftListSelect<true>;
-    rsvps: RsvpsSelect<false> | RsvpsSelect<true>;
     'couple-messages': CoupleMessagesSelect<false> | CoupleMessagesSelect<true>;
+    rsvps: RsvpsSelect<false> | RsvpsSelect<true>;
+    'gift-list': GiftListSelect<false> | GiftListSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -134,30 +134,18 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Fotos de fundo de cada parte do site. Escolha em "Onde aparece" o local da foto.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "background-media".
  */
-export interface User {
+export interface BackgroundMedia {
   id: number;
-  name?: string | null;
+  media: number | Media;
+  location: 'hero' | 'section1' | 'section2' | 'section3';
+  active?: boolean | null;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
 }
 /**
  * Repositório central de imagens e vídeos do site.
@@ -260,20 +248,6 @@ export interface VerticalCarouselMedia {
   createdAt: string;
 }
 /**
- * Fotos de fundo de cada parte do site. Escolha em "Onde aparece" o local da foto.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "background-media".
- */
-export interface BackgroundMedia {
-  id: number;
-  media: number | Media;
-  location: 'hero' | 'section1' | 'section2' | 'section3';
-  active?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Conteúdo da seção de vestimenta (Dress Code).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -291,22 +265,17 @@ export interface DressCode {
   createdAt: string;
 }
 /**
- * Lista de presentes do casamento.
+ * Mensagens públicas enviadas para os noivos. Qualquer visitante pode enviar.
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "gift-list".
+ * via the `definition` "couple-messages".
  */
-export interface GiftList {
+export interface CoupleMessage {
   id: number;
-  title: string;
-  subtitle?: string | null;
-  image: number | Media;
-  price: number;
-  /**
-   * Se vazio, será usado o link padrão das configurações do site.
-   */
-  paymentLink?: string | null;
-  active?: boolean | null;
+  senderName: string;
+  senderEmail: string;
+  message: string;
+  published?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -349,19 +318,50 @@ export interface Rsvp {
   createdAt: string;
 }
 /**
- * Mensagens públicas enviadas para os noivos. Qualquer visitante pode enviar.
+ * Lista de presentes do casamento.
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "couple-messages".
+ * via the `definition` "gift-list".
  */
-export interface CoupleMessage {
+export interface GiftList {
   id: number;
-  senderName: string;
-  senderEmail: string;
-  message: string;
-  published?: boolean | null;
+  title: string;
+  subtitle?: string | null;
+  image: number | Media;
+  price: number;
+  /**
+   * Se vazio, será usado o link padrão das configurações do site.
+   */
+  paymentLink?: string | null;
+  active?: boolean | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -388,36 +388,36 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
+        relationTo: 'background-media';
+        value: number | BackgroundMedia;
       } | null)
     | ({
         relationTo: 'vertical-carousel-media';
         value: number | VerticalCarouselMedia;
       } | null)
     | ({
-        relationTo: 'background-media';
-        value: number | BackgroundMedia;
-      } | null)
-    | ({
         relationTo: 'dress-code';
         value: number | DressCode;
       } | null)
     | ({
-        relationTo: 'gift-list';
-        value: number | GiftList;
+        relationTo: 'couple-messages';
+        value: number | CoupleMessage;
       } | null)
     | ({
         relationTo: 'rsvps';
         value: number | Rsvp;
       } | null)
     | ({
-        relationTo: 'couple-messages';
-        value: number | CoupleMessage;
+        relationTo: 'gift-list';
+        value: number | GiftList;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -463,26 +463,93 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "background-media_select".
  */
-export interface UsersSelect<T extends boolean = true> {
-  name?: T;
+export interface BackgroundMediaSelect<T extends boolean = true> {
+  media?: T;
+  location?: T;
+  active?: T;
   updatedAt?: T;
   createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vertical-carousel-media_select".
+ */
+export interface VerticalCarouselMediaSelect<T extends boolean = true> {
+  media?: T;
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dress-code_select".
+ */
+export interface DressCodeSelect<T extends boolean = true> {
+  style?: T;
+  description?: T;
+  forHer?: T;
+  forHim?: T;
+  media?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "couple-messages_select".
+ */
+export interface CoupleMessagesSelect<T extends boolean = true> {
+  senderName?: T;
+  senderEmail?: T;
+  message?: T;
+  published?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rsvps_select".
+ */
+export interface RsvpsSelect<T extends boolean = true> {
+  groupName?: T;
+  phone?: T;
+  pendingCount?: T;
+  members?:
     | T
     | {
+        name?: T;
+        role?: T;
+        status?: T;
         id?: T;
-        createdAt?: T;
-        expiresAt?: T;
       };
+  token?: T;
+  securityCode?: T;
+  whatsapp?:
+    | T
+    | {
+        status?: T;
+        sentAt?: T;
+        lastError?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gift-list_select".
+ */
+export interface GiftListSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  image?: T;
+  price?: T;
+  paymentLink?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -523,93 +590,26 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "vertical-carousel-media_select".
+ * via the `definition` "users_select".
  */
-export interface VerticalCarouselMediaSelect<T extends boolean = true> {
-  media?: T;
-  order?: T;
-  active?: T;
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "background-media_select".
- */
-export interface BackgroundMediaSelect<T extends boolean = true> {
-  media?: T;
-  location?: T;
-  active?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "dress-code_select".
- */
-export interface DressCodeSelect<T extends boolean = true> {
-  style?: T;
-  description?: T;
-  forHer?: T;
-  forHim?: T;
-  media?: T;
-  active?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "gift-list_select".
- */
-export interface GiftListSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  image?: T;
-  price?: T;
-  paymentLink?: T;
-  active?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "rsvps_select".
- */
-export interface RsvpsSelect<T extends boolean = true> {
-  groupName?: T;
-  phone?: T;
-  pendingCount?: T;
-  members?:
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
     | T
     | {
-        name?: T;
-        role?: T;
-        status?: T;
         id?: T;
+        createdAt?: T;
+        expiresAt?: T;
       };
-  token?: T;
-  securityCode?: T;
-  whatsapp?:
-    | T
-    | {
-        status?: T;
-        sentAt?: T;
-        lastError?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "couple-messages_select".
- */
-export interface CoupleMessagesSelect<T extends boolean = true> {
-  senderName?: T;
-  senderEmail?: T;
-  message?: T;
-  published?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

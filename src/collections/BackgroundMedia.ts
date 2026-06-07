@@ -7,6 +7,7 @@ export const BackgroundMedia: CollectionConfig = {
     plural: 'Fotos de Fundo',
   },
   admin: {
+    group: 'Conteúdo do Site',
     useAsTitle: 'location',
     defaultColumns: ['location', 'media', 'active'],
     description:
