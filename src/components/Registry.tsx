@@ -45,7 +45,13 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
               className="h-11 rounded-full px-6 text-[0.75rem] uppercase tracking-[0.12em] text-white shadow-md transition hover:brightness-95"
               style={{ backgroundColor: "var(--color-button)" }}
             >
-              <a href="/lista-de-presentes">Sugestões de Presentes</a>
+              <a
+                href="https://lista.camicado.com.br/renan-e-heloisa"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Sugestões de Presentes
+              </a>
             </Button>
 
             <span
