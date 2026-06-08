@@ -42,16 +42,23 @@ function injectCloudinaryTransform(url: string, transform: string): string {
 // fração de segundo até o vídeo começar — pode ser leve.
 const COVER_VIDEO_POSTER_TRANSFORM = 'so_0,f_auto,q_auto';
 
+// Transform do vídeo de fundo (`coverVideo`). O ARQUIVO ORIGINAL do trailer é 4K
+// e ~23MB, o que fazia o PRIMEIRO carregamento (cache de borda frio) levar ~15s.
+// Usamos `q_auto:best` (alta qualidade, sem granulado) limitado a 2560px de largura
+// — nítido em qualquer tela num bg fullscreen com object-cover — gerando ~5.5MB
+// (~4x menor), com cold start em ~2-3s. O custo do re-encode sob demanda do
+// Cloudinary acontece UMA única vez por derivada; o hook `warmCloudinaryCoverVideo`
+// (collections/Media.ts) pré-aquece a URL no upload para que nem o primeiro
+// visitante real pague esse custo.
+export const COVER_VIDEO_TRANSFORM = 'f_auto,q_auto:best,w_2560,c_limit';
+
 /**
  * Resolve a melhor URL de entrega da mídia. Prioriza o `secure_url` do
  * Cloudinary (servido pela CDN, com range requests e cache de borda) em vez
  * da rota local `/api/media/file/...`, que transmite pelo próprio servidor.
  *
- * Para o vídeo de fundo (`coverVideo`) usamos o ARQUIVO ORIGINAL, sem qualquer
- * transform: preserva a qualidade original e evita o re-encode sob demanda do
- * Cloudinary (que custava ~27s no primeiro acesso). O original já é servido pela
- * CDN com range requests (HTTP 206), então o playback começa quase instantâneo.
- * Imagens continuam com `f_auto,q_auto` (qualidade visualmente idêntica, menor).
+ * Vídeos de fundo (`coverVideo`) usam `COVER_VIDEO_TRANSFORM` (1920px + q_auto).
+ * Imagens usam `f_auto,q_auto` (qualidade visualmente idêntica, menor).
  */
 function resolveMediaURL(
   media?: PayloadMedia | null,
@@ -60,7 +67,7 @@ function resolveMediaURL(
   const secureURL = media?.cloudinary?.secure_url;
   if (secureURL) {
     if (coverVideo && isVideo(media)) {
-      return secureURL;
+      return injectCloudinaryTransform(secureURL, COVER_VIDEO_TRANSFORM);
     }
     return injectCloudinaryTransform(secureURL, 'f_auto,q_auto');
   }

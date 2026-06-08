@@ -60,6 +60,54 @@ function buildCloudinaryPlayerURL(doc: MediaDoc): string | null {
   return parsed.toString();
 }
 
+// Mantenha em sincronia com COVER_VIDEO_TRANSFORM em components/PayloadMediaRenderer.tsx.
+const COVER_VIDEO_TRANSFORM = 'f_auto,q_auto:best,w_2560,c_limit';
+const COVER_VIDEO_POSTER_TRANSFORM = 'so_0,f_auto,q_auto';
+
+function injectCloudinaryTransform(url: string, transform: string): string {
+  const marker = '/upload/';
+  const idx = url.indexOf(marker);
+  if (idx === -1) return url;
+  const head = url.slice(0, idx + marker.length);
+  const tail = url.slice(idx + marker.length);
+  return `${head}${transform}/${tail}`;
+}
+
+/**
+ * Pré-aquece (warm-up) a derivada otimizada do vídeo de fundo no Cloudinary logo
+ * após o upload. O Cloudinary gera a derivada sob demanda na PRIMEIRA requisição
+ * (re-encode que pode levar ~20-30s); ao requisitá-la aqui, o trabalho é feito
+ * uma vez e a CDN passa a servir do cache de borda. Sem isso, o primeiro visitante
+ * real pagaria essa espera. Fire-and-forget: nunca bloqueia o salvamento.
+ */
+const warmCloudinaryCoverVideo: CollectionAfterChangeHook = ({ doc, req }) => {
+  const mediaDoc = doc as MediaDoc;
+  const secureURL = mediaDoc.cloudinary?.secure_url;
+
+  if (!isVideoMedia(mediaDoc) || !secureURL) {
+    return doc;
+  }
+
+  const videoURL = injectCloudinaryTransform(secureURL, COVER_VIDEO_TRANSFORM);
+  const posterURL = injectCloudinaryTransform(
+    secureURL,
+    COVER_VIDEO_POSTER_TRANSFORM
+  ).replace(/\.(mp4|mov|webm|m4v|ogv|avi|mkv)(\?.*)?$/i, '.jpg$2');
+
+  // Não aguardamos: o warm-up roda em background e o log só registra o resultado.
+  void Promise.allSettled([fetch(videoURL), fetch(posterURL)])
+    .then(() => {
+      req.payload.logger.info(
+        `Cloudinary cover video pré-aquecido: ${mediaDoc.cloudinary?.public_id}`
+      );
+    })
+    .catch(() => {
+      /* warm-up é best-effort; falha não impacta o site */
+    });
+
+  return doc;
+};
+
 const syncCloudinaryPlayerURL: CollectionAfterChangeHook = async ({
   context,
   data,
@@ -123,7 +171,7 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   hooks: {
-    afterChange: [syncCloudinaryPlayerURL],
+    afterChange: [syncCloudinaryPlayerURL, warmCloudinaryCoverVideo],
   },
   fields: [
     {
