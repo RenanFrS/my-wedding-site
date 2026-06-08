@@ -136,7 +136,7 @@ export default function ConfirmPresence(): React.JSX.Element {
   }, [confirmedGroup]);
 
   return (
-    <section id="confirmar-presenca" className="hz-margin py-24 md:py-32 relative">
+    <section id="confirmacao" className="hz-margin py-24 md:py-32 relative">
       <div className="absolute inset-0 pointer-events-none select-none opacity-[0.035] bg-[radial-gradient(circle_at_center,#ac5b30_0%,transparent_80%)]" />
       <div className="relative max-w-3xl mx-auto">
         <div className="text-center mb-10">
@@ -167,7 +167,7 @@ export default function ConfirmPresence(): React.JSX.Element {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Input
                     type="text"
-                    placeholder="Ex: Maria Eduarda da Silva"
+                    placeholder="Ex: Jose Italo da Silva"
                     value={name}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                     className="w-full rounded-md border border-[#ac5b30]/30 bg-white/60 focus:bg-white focus:border-[#ac5b30] focus:ring-2 focus:ring-[#ac5b30]/20 px-3 py-2 text-sm outline-none placeholder:text-[#6d4635]/40"

@@ -66,7 +66,7 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
 
         <div className="registry-img reveal relative mx-auto w-full max-w-[430px] md:max-w-[540px]">
           <div
-            className="pointer-events-none absolute -left-4 -top-4 hidden h-full w-full border md:block"
+            className="pointer-events-none absolute -left-4 -top-4 hidden h-full w-full rounded-2xl border md:block"
             style={{
               borderColor: "var(--color-subtitle)",
               opacity: 0.22,
@@ -74,10 +74,10 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
           />
 
           <div
-            className="relative overflow-hidden border bg-white p-3 md:p-4 shadow-[0_30px_56px_-34px_rgba(0,0,0,0.65)]"
+            className="relative overflow-hidden rounded-2xl border bg-white p-3 md:p-4 shadow-[0_30px_56px_-34px_rgba(0,0,0,0.65)]"
             style={{ borderColor: "var(--color-subtitle)" }}
           >
-            <div className="aspect-[4/5] overflow-hidden">
+            <div className="aspect-[4/5] overflow-hidden rounded-xl">
               <PayloadMediaRenderer
                 media={media}
                 className="h-full w-full object-cover"
