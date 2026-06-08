@@ -109,9 +109,8 @@ export const RSVPs: CollectionConfig = {
       name: 'phone',
       type: 'text',
       label: 'Telefone (WhatsApp do Titular)',
-      required: true,
       admin: {
-        description: 'Apenas números, com DDD. Ex: 11999998888',
+        description: 'Opcional. Apenas números, com DDD. Ex: 11999998888',
       },
     },
     {

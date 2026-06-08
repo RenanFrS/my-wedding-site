@@ -289,9 +289,9 @@ export interface Rsvp {
   id: number;
   groupName: string;
   /**
-   * Apenas números, com DDD. Ex: 11999998888
+   * Opcional. Apenas números, com DDD. Ex: 11999998888
    */
-  phone: string;
+  phone?: string | null;
   /**
    * Status agregado do grupo (calculado a partir dos membros). Use o filtro da lista para ver quem confirmou, recusou ou está pendente.
    */
