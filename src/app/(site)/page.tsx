@@ -18,7 +18,7 @@ function formatWeddingDate(dateInput: string): string {
     day: '2-digit',
     month: 'long',
     year: 'numeric',
-    timeZone: 'UTC',
+    timeZone: 'America/Sao_Paulo',
   }).format(parsed);
 }
 
@@ -26,10 +26,17 @@ function formatCeremonyTime(dateInput: string): string {
   const parsed = new Date(dateInput);
   if (Number.isNaN(parsed.getTime())) return '';
 
-  // Usa a mesma timezone (UTC) do formatWeddingDate para refletir a hora
-  // exata definida no painel, sem deslocamento por fuso do servidor.
-  const hours = parsed.getUTCHours();
-  const minutes = parsed.getUTCMinutes();
+  // O Payload armazena a data em UTC. Formatamos no fuso de Brasília
+  // (America/Sao_Paulo) para exibir exatamente o horário definido no painel.
+  const parts = new Intl.DateTimeFormat('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+    timeZone: 'America/Sao_Paulo',
+  }).formatToParts(parsed);
+
+  const hours = Number(parts.find((part) => part.type === 'hour')?.value ?? '0');
+  const minutes = Number(parts.find((part) => part.type === 'minute')?.value ?? '0');
 
   return minutes === 0 ? `${hours}h` : `${hours}h${String(minutes).padStart(2, '0')}`;
 }
