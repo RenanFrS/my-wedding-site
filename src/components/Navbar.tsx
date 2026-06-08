@@ -27,6 +27,7 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
   const active: string | null = useScrollSpy(sections);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(true); // Começa visível
+  const [onHero, setOnHero] = useState<boolean>(true); // Sobre o vídeo escuro do hero
 
   useEffect(() => {
     let ticking = false;
@@ -38,6 +39,9 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
       ticking = false;
       const scrollY: number = window.scrollY;
       setScrolled(scrollY > 8);
+      // Enquanto o navbar está no topo, ele está sobreposto ao vídeo escuro do
+      // hero. Acima disso ele some e só reaparece já sobre o conteúdo claro.
+      setOnHero(scrollY < 50);
 
       if (!timeline) timeline = document.getElementById('timeline');
       if (!timeline) return;
@@ -78,10 +82,11 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
 
   return (
     <nav
+      style={{ color: onHero ? '#ffffff' : 'var(--color-text)' }}
       className={`fixed left-0 right-0 z-50 transition-all duration-700 ease-out ${
         visible ? 'top-0 opacity-100' : '-top-24 opacity-0'
       } ${
-        scrolled
+        scrolled && !onHero
           ? 'bg-white/80 backdrop-blur border-b border-black/5'
           : 'bg-transparent'
       }`}
@@ -121,7 +126,7 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
                 {link.label}
               </a>
               <span
-                className={`absolute left-0 -bottom-0.5 h-[2px] bg-[#ac5b30] transition-all duration-300 ${
+                className={`absolute left-0 -bottom-0.5 h-[2px] bg-[var(--color-button)] transition-all duration-300 ${
                   active === link.id ? 'w-full' : 'w-0'
                 }`}
               />
@@ -141,7 +146,7 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
               { label: 'Confirmação', link: '#confirmacao', ariaLabel: 'Ir para Confirmação' },
               { label: 'Presentes', link: '#presentes', ariaLabel: 'Ir para Presentes' },
             ]}
-            menuButtonColor={scrolled ? '#6d4635' : '#ffffff'}
+            menuButtonColor={onHero ? '#ffffff' : '#6d4635'}
             openMenuButtonColor="#6d4635"
             changeMenuColorOnOpen
           />

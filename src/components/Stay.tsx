@@ -17,7 +17,7 @@ export default function Stay({ media = null }: StayProps): React.JSX.Element {
     >
       {/* Header */}
       <div className="text-center mb-12 md:mb-16">
-        <h2 className="reveal text-[2rem] md:text-[2.5rem] font-amoresa font-normal tracking-wide text-[#ac5b30] mb-4">
+        <h2 className="reveal text-[2rem] md:text-[2.5rem] font-amoresa font-normal tracking-wide text-[var(--color-title)] mb-4">
           Cerimônia
         </h2>
         <p className="reveal text-base md:text-lg text-[#6d4635] max-w-2xl mx-auto">

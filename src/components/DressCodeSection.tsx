@@ -78,7 +78,7 @@ export default function DressCodeSection({ content }: DressCodeSectionProps): Re
 
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             <article className="rounded-2xl border border-[#e5d7ce] bg-white/55 p-4">
-              <div className="mb-3 flex items-center gap-2 text-[var(--color-title)]">
+              <div className="mb-3 flex items-center gap-2 text-[var(--color-subtitle)]">
                 <Shirt className="h-4 w-4" />
                 <h3 className="text-sm font-bold uppercase tracking-wide">Para elas</h3>
               </div>
@@ -86,7 +86,7 @@ export default function DressCodeSection({ content }: DressCodeSectionProps): Re
             </article>
 
             <article className="rounded-2xl border border-[#e5d7ce] bg-white/55 p-4">
-              <div className="mb-3 flex items-center gap-2 text-[var(--color-title)]">
+              <div className="mb-3 flex items-center gap-2 text-[var(--color-subtitle)]">
                 <User className="h-4 w-4" />
                 <h3 className="text-sm font-bold uppercase tracking-wide">Para eles</h3>
               </div>

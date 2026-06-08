@@ -152,7 +152,7 @@ export default function MensagemNoivos(): React.JSX.Element {
       <div className="absolute inset-0 pointer-events-none select-none opacity-[0.035] bg-[radial-gradient(circle_at_center,#ac5b30_0%,transparent_80%)]" />
       <div className="relative max-w-5xl mx-auto">
         <div className="text-center mb-10">
-          <h2 className="font-display text-3xl md:text-5xl tracking-tight mb-3 text-[#ac5b30]">
+          <h2 className="font-display text-3xl md:text-5xl tracking-tight mb-3 text-[var(--color-title)]">
             MENSAGEM PARA OS NOIVOS
           </h2>
           <p className="font-sans text-sm md:text-base text-[#6d4635] max-w-2xl mx-auto leading-relaxed italic">

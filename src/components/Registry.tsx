@@ -16,12 +16,12 @@ export default function Registry({ media = null }: RegistryProps): React.JSX.Ele
 
           <h2
             className="mt-5 text-[2.6rem] leading-[0.95] md:text-[4.1rem]"
-            style={{ color: "var(--color-text)" }}
+            style={{ color: "var(--color-title)" }}
           >
             Lista de
             <span
               className="block font-amoresa text-[3.1rem] md:mt-2 md:text-[4.5rem]"
-              style={{ color: "var(--color-subtitle)" }}
+              style={{ color: "var(--color-title)" }}
             >
               Presentes
             </span>
