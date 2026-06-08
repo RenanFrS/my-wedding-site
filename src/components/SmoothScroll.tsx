@@ -33,6 +33,11 @@ export default function SmoothScroll({ children }: SmoothScrollProps): React.JSX
       smoothWheel: true,
     });
 
+    // Expõe a instância para que botões/links possam pedir scroll suave
+    // (ex: "Confirme Presença"). No mobile/reduced-motion não há Lenis e o
+    // fallback nativo (scrollIntoView smooth) assume.
+    (window as Window & { lenis?: Lenis }).lenis = lenis;
+
     // Mantém o ScrollTrigger (carrossel Skiper30) sincronizado com o Lenis.
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -48,6 +53,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps): React.JSX
       gsap.ticker.remove(onTick);
       lenis.off('scroll', ScrollTrigger.update);
       lenis.destroy();
+      delete (window as Window & { lenis?: Lenis }).lenis;
     };
   }, []);
 

@@ -18,18 +18,28 @@ export async function POST(req: Request) {
 
     const payload = await getPayload({ config });
 
-    // `like` faz correspondência parcial e insensível a maiúsculas/acentos.
+    // `like` apenas pré-filtra candidatos no banco; a correspondência real é
+    // EXATA pelo nome completo (feita abaixo em JS).
     const { docs } = await payload.find({
       collection: 'rsvps',
       where: { 'members.name': { like: name } },
       depth: 0,
-      limit: 10,
+      limit: 20,
     });
+
+    // Nome alvo normalizado: sem espaços nas pontas e sem diferenciar
+    // maiúsculas/minúsculas. Não usamos "contém": "Ferreira" não acha nada,
+    // mas "Nilson Ferreira" (nome completo, como cadastrado) acha.
+    const target = name.toLowerCase();
+    const matchesExact = (m: any): boolean =>
+      String(m?.name || '').trim().toLowerCase() === target;
 
     // Mapeia explicitamente para não vazar token nem securityCode.
     // Mostra apenas membros ainda PENDENTES e grupos que ainda têm pendências:
     // quem já confirmou/recusou não volta a aparecer na busca.
+    // Limita a UM único resultado.
     const groups = docs
+      .filter((group: any) => (group.members || []).some(matchesExact))
       .map((group: any) => ({
         groupId: group.id,
         groupName: group.groupName,
@@ -41,7 +51,8 @@ export async function POST(req: Request) {
             status: 'pending' as const,
           })),
       }))
-      .filter((group) => group.members.length > 0);
+      .filter((group) => group.members.length > 0)
+      .slice(0, 1);
 
     return NextResponse.json({ groups });
   } catch (error) {
