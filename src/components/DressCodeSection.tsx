@@ -40,7 +40,7 @@ export default function DressCodeSection({ content }: DressCodeSectionProps): Re
       ref={sectionRef}
       className="relative overflow-hidden bg-[var(--color-background)] py-20 md:py-28"
     >
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 hidden md:block">
         <div
           aria-hidden
           className="absolute left-0 top-0 h-[108%] w-[72%] bg-[var(--color-title)] [clip-path:ellipse(92%_80%_at_0%_0%)] md:h-[116%] md:w-[62%] md:[clip-path:ellipse(90%_78%_at_0%_0%)] lg:w-[54%] lg:[clip-path:ellipse(88%_78%_at_0%_0%)]"
