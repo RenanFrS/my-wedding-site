@@ -7,6 +7,7 @@ import Timeline from '@/components/Timeline';
 import Skiper30 from '@/components/Skiper30';
 import Stay from '@/components/Stay';
 import DressCodeSection from '@/components/DressCodeSection';
+import ConfirmPresence from '@/components/ConfirmPresence';
 import MensagemNoivos from '@/components/MensagemNoivos';
 import Registry from '@/components/Registry';
 import PartingMessage from '@/components/PartingMessage';
@@ -65,6 +66,7 @@ export default function HomePageClient({
           <div className="relative z-20 -mt-16 md:-mt-24 rounded-t-[2rem] md:rounded-t-[3.5rem] bg-[var(--color-background)] pt-6 md:pt-10">
             <Stay media={ceremonyMedia} ceremonyTime={ceremonyTime} />
           </div>
+          <ConfirmPresence />
           <DressCodeSection content={dressCode} />
           <MensagemNoivos />
           <section id="presentes">

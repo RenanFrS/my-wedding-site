@@ -38,7 +38,7 @@ export const RSVPs: CollectionConfig = {
   admin: {
     group: 'Convidados & Presentes',
     useAsTitle: 'groupName',
-    defaultColumns: ['groupName', 'pendingCount', 'phone', 'whatsapp', 'token'],
+    defaultColumns: ['groupName', 'confirmationStatus', 'pendingCount', 'phone', 'whatsapp'],
     description:
       'Cadastro único de grupos/famílias: titular + agregados, código de segurança e disparo do convite por WhatsApp.',
     components: {
@@ -77,9 +77,22 @@ export const RSVPs: CollectionConfig = {
             ? originalDoc.members
             : [];
 
-        data.pendingCount = members.filter(
-          (member: any) => member?.status === 'pending',
-        ).length;
+        const pending = members.filter((m: any) => m?.status === 'pending').length;
+        const confirmed = members.filter((m: any) => m?.status === 'confirmed').length;
+        const declined = members.filter((m: any) => m?.status === 'declined').length;
+
+        data.pendingCount = pending;
+
+        // Status agregado do grupo, para visualizar/filtrar na lista do admin.
+        if (members.length === 0 || pending > 0) {
+          data.confirmationStatus = 'pending';
+        } else if (confirmed > 0 && declined === 0) {
+          data.confirmationStatus = 'confirmed';
+        } else if (declined > 0 && confirmed === 0) {
+          data.confirmationStatus = 'declined';
+        } else {
+          data.confirmationStatus = 'partial';
+        }
 
         return data;
       },
@@ -99,6 +112,23 @@ export const RSVPs: CollectionConfig = {
       required: true,
       admin: {
         description: 'Apenas números, com DDD. Ex: 11999998888',
+      },
+    },
+    {
+      name: 'confirmationStatus',
+      type: 'select',
+      label: 'Confirmação',
+      defaultValue: 'pending',
+      options: [
+        { label: 'Pendente', value: 'pending' },
+        { label: 'Confirmado', value: 'confirmed' },
+        { label: 'Recusado', value: 'declined' },
+        { label: 'Parcial', value: 'partial' },
+      ],
+      admin: {
+        readOnly: true,
+        description:
+          'Status agregado do grupo (calculado a partir dos membros). Use o filtro da lista para ver quem confirmou, recusou ou está pendente.',
       },
     },
     {

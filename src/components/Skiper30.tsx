@@ -122,9 +122,9 @@ const Skiper30: React.FC<Skiper30Props> = ({ mediaItems }) => {
     };
   }, [dimension, normalizedMedia.length]);
 
-  // Mobile: 3 colunas, Desktop: 4 colunas
+  // Mobile: 2 colunas, Desktop: 4 colunas
   const isMobile: boolean = dimension.width < 768;
-  const columns: number = isMobile ? 3 : 4;
+  const columns: number = isMobile ? 2 : 4;
 
   // Distribuir mídias nas colunas (repetir para preencher todas)
   const getColumnItems = (columnIndex: number): PayloadMedia[] => {
@@ -216,7 +216,7 @@ const Column = React.forwardRef<HTMLDivElement, ColumnProps>(
     return (
       <div
         ref={ref}
-        className={`relative ${getTopPosition()} flex h-full ${isMobile ? "w-1/3" : "w-1/4"} min-w-[150px] md:min-w-[250px] flex-col gap-[2vw] will-change-transform`}
+        className={`relative ${getTopPosition()} flex h-full ${isMobile ? "w-1/2" : "w-1/4"} min-w-[150px] md:min-w-[250px] flex-col gap-[2vw] will-change-transform`}
       >
         {mediaItems.map((media, i) => (
           <div

@@ -293,6 +293,10 @@ export interface Rsvp {
    */
   phone: string;
   /**
+   * Status agregado do grupo (calculado a partir dos membros). Use o filtro da lista para ver quem confirmou, recusou ou está pendente.
+   */
+  confirmationStatus?: ('pending' | 'confirmed' | 'declined' | 'partial') | null;
+  /**
    * Quantidade de convidados desse grupo que ainda não confirmaram.
    */
   pendingCount?: number | null;
@@ -516,6 +520,7 @@ export interface CoupleMessagesSelect<T extends boolean = true> {
 export interface RsvpsSelect<T extends boolean = true> {
   groupName?: T;
   phone?: T;
+  confirmationStatus?: T;
   pendingCount?: T;
   members?:
     | T
