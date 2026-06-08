@@ -102,7 +102,7 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
             <span
               role="img"
               aria-hidden="true"
-              className="block h-12 w-12 md:h-14 md:w-14 transition-colors duration-700 ease-out"
+              className="block h-14 w-14 md:h-20 md:w-20 transition-colors duration-700 ease-out"
               style={{
                 backgroundColor: onHero ? '#ffffff' : 'var(--color-text)',
                 WebkitMaskImage: 'url(/logo/monograma.svg)',
