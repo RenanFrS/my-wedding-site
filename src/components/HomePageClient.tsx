@@ -20,6 +20,7 @@ interface HomePageClientProps {
   brideFullName: string;
   weddingDate: string;
   weddingDateText: string;
+  ceremonyTime: string;
   countdownEnabled: boolean;
   heroMedia: PayloadMedia | null;
   ceremonyMedia: PayloadMedia | null;
@@ -34,6 +35,7 @@ export default function HomePageClient({
   brideFullName,
   weddingDate,
   weddingDateText,
+  ceremonyTime,
   countdownEnabled,
   heroMedia,
   ceremonyMedia,
@@ -61,7 +63,7 @@ export default function HomePageClient({
         <div className="w-screen">
           <Skiper30 mediaItems={carouselMedia} />
           <div className="relative z-20 -mt-16 md:-mt-24 rounded-t-[2rem] md:rounded-t-[3.5rem] bg-[var(--color-background)] pt-6 md:pt-10">
-            <Stay media={ceremonyMedia} />
+            <Stay media={ceremonyMedia} ceremonyTime={ceremonyTime} />
           </div>
           <DressCodeSection content={dressCode} />
           <MensagemNoivos />

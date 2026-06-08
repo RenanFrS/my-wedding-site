@@ -22,6 +22,18 @@ function formatWeddingDate(dateInput: string): string {
   }).format(parsed);
 }
 
+function formatCeremonyTime(dateInput: string): string {
+  const parsed = new Date(dateInput);
+  if (Number.isNaN(parsed.getTime())) return '';
+
+  // Usa a mesma timezone (UTC) do formatWeddingDate para refletir a hora
+  // exata definida no painel, sem deslocamento por fuso do servidor.
+  const hours = parsed.getUTCHours();
+  const minutes = parsed.getUTCMinutes();
+
+  return minutes === 0 ? `${hours}h` : `${hours}h${String(minutes).padStart(2, '0')}`;
+}
+
 function toMedia(value: unknown): PayloadMedia | null {
   if (!value || typeof value !== 'object') return null;
 
@@ -45,6 +57,7 @@ export default async function Page(): Promise<React.JSX.Element> {
 
   const weddingDate = settings.weddingDate || '';
   const weddingDateText = formatWeddingDate(weddingDate);
+  const ceremonyTime = formatCeremonyTime(weddingDate);
 
   const getMediaByLocation = (location: BackgroundMedia['location']): PayloadMedia | null => {
     const item = backgrounds.find((background) => background.location === location);
@@ -63,6 +76,7 @@ export default async function Page(): Promise<React.JSX.Element> {
       weddingDate={weddingDate}
       weddingDateText={weddingDateText}
       countdownEnabled={settings.countdownEnabled}
+      ceremonyTime={ceremonyTime}
       heroMedia={getMediaByLocation('hero')}
       ceremonyMedia={getMediaByLocation('section1')}
       registryMedia={getMediaByLocation('section2')}

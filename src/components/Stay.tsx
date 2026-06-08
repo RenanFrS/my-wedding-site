@@ -7,9 +7,14 @@ import type { PayloadMedia } from "@/types";
 
 interface StayProps {
   media?: PayloadMedia | null;
+  ceremonyTime?: string;
 }
 
-export default function Stay({ media = null }: StayProps): React.JSX.Element {
+export default function Stay({ media = null, ceremonyTime = '' }: StayProps): React.JSX.Element {
+  const ceremonyTimeText = ceremonyTime
+    ? `Cerimônia às ${ceremonyTime}`
+    : 'Inserir no painel: Site Settings > Casal e Data > Data do Casamento';
+
   return (
     <section
       id="cerimonia"
@@ -64,7 +69,7 @@ export default function Stay({ media = null }: StayProps): React.JSX.Element {
                     Horário
                   </h3>
                   <p className="text-sm md:text-base text-[#6d4635]/80">
-                    Cerimônia às 13h
+                    {ceremonyTimeText}
                   </p>
                 </div>
               </div>
@@ -93,7 +98,7 @@ export default function Stay({ media = null }: StayProps): React.JSX.Element {
                     Horário
                   </h3>
                   <p className="text-sm md:text-base text-[#6d4635]/80">
-                    Cerimônia às 13h
+                    {ceremonyTimeText}
                   </p>
                 </div>
               </div>
