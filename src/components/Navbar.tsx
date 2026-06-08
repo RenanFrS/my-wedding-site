@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import StaggeredMenu from '@/components/ui/StaggeredMenu';
 import { useScrollSpy } from '@/components/hooks/useScrollSpy';
 
@@ -94,15 +93,27 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
       <div className="flex items-center justify-between px-4 md:px-6 h-16 md:h-20">
         {/* Left: Logo + Names + Date */}
         <div className="flex items-center gap-3 md:gap-4">
-          <a href="#inicio" aria-label="Ir para o topo" className="block">
-            <Image
-              src="/logo/monograma.svg"
-              alt={`Monograma ${coupleName}`}
-              width={80}
-              height={80}
-              className="object-contain"
-              sizes="(min-width: 768px) 56px, 48px"
-              priority
+          <a
+            href="#inicio"
+            aria-label={`Ir para o topo — Monograma ${coupleName}`}
+            className="block"
+          >
+            {/* SVG recolorido via mask: branco sobre o hero, cor do site fora dele */}
+            <span
+              role="img"
+              aria-hidden="true"
+              className="block h-12 w-12 md:h-14 md:w-14 transition-colors duration-700 ease-out"
+              style={{
+                backgroundColor: onHero ? '#ffffff' : 'var(--color-text)',
+                WebkitMaskImage: 'url(/logo/monograma.svg)',
+                maskImage: 'url(/logo/monograma.svg)',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center',
+                maskPosition: 'center',
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+              }}
             />
           </a>
           <div className="leading-tight flex flex-col items-end">
