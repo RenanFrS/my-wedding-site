@@ -144,7 +144,7 @@ export default function ConfirmPresence(): React.JSX.Element {
             CONFIRME SUA PRESENÇA
           </h2>
           <p className="font-sans text-sm md:text-base text-[#6d4635] max-w-2xl mx-auto leading-relaxed italic">
-            Procure seu nome completo para confirmar ou recusar a presença.
+            Procure seu nome para confirmar ou recusar a presença.
           </p>
         </div>
 
