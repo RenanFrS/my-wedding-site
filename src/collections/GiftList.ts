@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload';
 
 export const GiftList: CollectionConfig = {
   slug: 'gift-list',
+  labels: {
+    singular: 'Presente',
+    plural: 'Lista de Presentes',
+  },
   admin: {
     group: 'Convidados & Presentes',
     useAsTitle: 'title',

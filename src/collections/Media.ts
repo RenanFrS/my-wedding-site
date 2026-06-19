@@ -159,6 +159,10 @@ const syncCloudinaryPlayerURL: CollectionAfterChangeHook = async ({
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: {
+    singular: 'Mídia',
+    plural: 'Biblioteca de Mídia',
+  },
   upload: {
     mimeTypes: ['image/*', 'video/*'],
   },

@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload';
 
 export const DressCode: CollectionConfig = {
   slug: 'dress-code',
+  labels: {
+    singular: 'Dress Code',
+    plural: 'Dress Code',
+  },
   admin: {
     group: 'Conteúdo do Site',
     useAsTitle: 'style',

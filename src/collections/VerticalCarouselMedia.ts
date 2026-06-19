@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload';
 
 export const VerticalCarouselMedia: CollectionConfig = {
   slug: 'vertical-carousel-media',
+  labels: {
+    singular: 'Mídia do Carrossel',
+    plural: 'Mídias do Carrossel',
+  },
   admin: {
     group: 'Conteúdo do Site',
     useAsTitle: 'order',

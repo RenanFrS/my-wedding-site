@@ -24,7 +24,11 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { default as default_e590dcb20be5f1b40b808c9e3c5f6284 } from '@/components/payload/brand/Icon'
+import { default as default_1e1d7d8c68b27d66b823ce883f6ccaac } from '@/components/payload/brand/Logo'
 import { default as default_6e8b574f03046afd47529156de827612 } from '@/components/payload/DashboardStats'
+import { default as default_33440c1da3fac9136b15361b0ce29237 } from '@/components/payload/seating/SeatingNavLink'
+import { default as default_d49996a433a176597393ae0836b44c0e } from '@/components/payload/seating/SeatingView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
@@ -54,6 +58,10 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "@/components/payload/brand/Icon#default": default_e590dcb20be5f1b40b808c9e3c5f6284,
+  "@/components/payload/brand/Logo#default": default_1e1d7d8c68b27d66b823ce883f6ccaac,
   "@/components/payload/DashboardStats#default": default_6e8b574f03046afd47529156de827612,
+  "@/components/payload/seating/SeatingNavLink#default": default_33440c1da3fac9136b15361b0ce29237,
+  "@/components/payload/seating/SeatingView#default": default_d49996a433a176597393ae0836b44c0e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

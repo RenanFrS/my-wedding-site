@@ -35,6 +35,10 @@ async function generateUniqueValue(
 
 export const RSVPs: CollectionConfig = {
   slug: 'rsvps',
+  labels: {
+    singular: 'Grupo de Convidados',
+    plural: 'Convidados',
+  },
   admin: {
     group: 'Convidados & Presentes',
     useAsTitle: 'groupName',
@@ -239,6 +243,16 @@ export const RSVPs: CollectionConfig = {
           },
         },
       ],
+    },
+    {
+      name: 'assignedTable',
+      type: 'relationship',
+      relationTo: 'tables',
+      label: 'Mesa',
+      admin: {
+        description:
+          'Mesa em que o grupo está alocado. Normalmente definido pela tela "Mesas".',
+      },
     },
     {
       name: 'sendInvite',

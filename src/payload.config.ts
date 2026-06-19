@@ -2,6 +2,7 @@ import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { pt } from '@payloadcms/translations/languages/pt';
 import { cloudinaryStorage } from 'payload-cloudinary';
 import sharp from 'sharp';
 import fs from 'fs';
@@ -16,6 +17,7 @@ import { BackgroundMedia } from './collections/BackgroundMedia';
 import { DressCode } from './collections/DressCode';
 import { GiftList } from './collections/GiftList';
 import { RSVPs } from './collections/RSVP';
+import { Tables } from './collections/Tables';
 import { CoupleMessages } from './collections/CoupleMessages';
 
 // Globals
@@ -133,10 +135,28 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: ' — Painel do Casamento',
+      icons: [{ rel: 'icon', type: 'image/jpeg', url: '/logo/favicon.jpg' }],
     },
     components: {
       afterDashboard: ['@/components/payload/DashboardStats#default'],
+      afterNavLinks: ['@/components/payload/seating/SeatingNavLink#default'],
+      graphics: {
+        Logo: '@/components/payload/brand/Logo#default',
+        Icon: '@/components/payload/brand/Icon#default',
+      },
+      views: {
+        seating: {
+          Component: '@/components/payload/seating/SeatingView#default',
+          path: '/mesas',
+        },
+      },
     },
+  },
+  // Painel inteiro em português: declarando apenas `pt`, qualquer requisição
+  // resolve para português, independente do idioma do navegador.
+  i18n: {
+    supportedLanguages: { pt },
+    fallbackLanguage: 'pt',
   },
   collections: [
     // Ordem do menu lateral. Os grupos aparecem na ordem da primeira
@@ -146,6 +166,7 @@ export default buildConfig({
     DressCode,
     CoupleMessages,
     RSVPs, // Convidados & Presentes
+    Tables,
     GiftList,
     Media, // Biblioteca
     Users, // Sistema

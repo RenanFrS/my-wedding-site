@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload';
 
 export const CoupleMessages: CollectionConfig = {
   slug: 'couple-messages',
+  labels: {
+    singular: 'Mensagem dos Noivos',
+    plural: 'Mensagens dos Noivos',
+  },
   admin: {
     group: 'Conteúdo do Site',
     useAsTitle: 'senderName',

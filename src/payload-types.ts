@@ -72,6 +72,7 @@ export interface Config {
     'dress-code': DressCode;
     'couple-messages': CoupleMessage;
     rsvps: Rsvp;
+    tables: Table;
     'gift-list': GiftList;
     media: Media;
     users: User;
@@ -87,6 +88,7 @@ export interface Config {
     'dress-code': DressCodeSelect<false> | DressCodeSelect<true>;
     'couple-messages': CoupleMessagesSelect<false> | CoupleMessagesSelect<true>;
     rsvps: RsvpsSelect<false> | RsvpsSelect<true>;
+    tables: TablesSelect<false> | TablesSelect<true>;
     'gift-list': GiftListSelect<false> | GiftListSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -318,6 +320,26 @@ export interface Rsvp {
     sentAt?: string | null;
     lastError?: string | null;
   };
+  /**
+   * Mesa em que o grupo está alocado. Normalmente definido pela tela "Mesas".
+   */
+  assignedTable?: (number | null) | Table;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Mesas do salão. Use a tela "Mesas" para montar a planta e distribuir os grupos visualmente.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tables".
+ */
+export interface Table {
+  id: number;
+  number: number;
+  shape: 'round' | 'square' | 'rectangle';
+  capacity: number;
+  posX?: number | null;
+  posY?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -410,6 +432,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'rsvps';
         value: number | Rsvp;
+      } | null)
+    | ({
+        relationTo: 'tables';
+        value: number | Table;
       } | null)
     | ({
         relationTo: 'gift-list';
@@ -539,6 +565,20 @@ export interface RsvpsSelect<T extends boolean = true> {
         sentAt?: T;
         lastError?: T;
       };
+  assignedTable?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tables_select".
+ */
+export interface TablesSelect<T extends boolean = true> {
+  number?: T;
+  shape?: T;
+  capacity?: T;
+  posX?: T;
+  posY?: T;
   updatedAt?: T;
   createdAt?: T;
 }
