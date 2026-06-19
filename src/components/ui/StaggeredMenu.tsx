@@ -8,6 +8,7 @@ import React, {
 import { gsap } from "gsap";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { scrollToHash } from "@/lib/scrollToHash";
 
 interface MenuItem {
   label: string;
@@ -451,7 +452,16 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                   href={it.link}
                   aria-label={it.ariaLabel || it.label}
                   className="py-2 sm-panel-item relative pr-10"
-                  onClick={closeWithAnimation}
+                  onClick={(e) => {
+                    // Fecha o painel antes de scrollar: enquanto o Sheet está
+                    // aberto, o Radix Dialog trava o scroll do body.
+                    if (it.link.startsWith("#")) {
+                      e.preventDefault();
+                      void closeWithAnimation().then(() => scrollToHash(it.link));
+                    } else {
+                      void closeWithAnimation();
+                    }
+                  }}
                   data-index={idx + 1}
                 >
                   <span className="sm-panel-itemLabel inline-block">

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import StaggeredMenu from '@/components/ui/StaggeredMenu';
 import { useScrollSpy } from '@/components/hooks/useScrollSpy';
+import { scrollToHash } from '@/lib/scrollToHash';
 
 interface NavLink {
   id: string;
@@ -97,6 +98,10 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
             href="#inicio"
             aria-label={`Ir para o topo — Monograma ${coupleName}`}
             className="block"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToHash('#inicio');
+            }}
           >
             {/* SVG recolorido via mask: branco sobre o hero, cor do site fora dele */}
             <span
@@ -133,6 +138,10 @@ export default function Navbar({ coupleName, weddingDateText }: NavbarProps): Re
               <a
                 href={`#${link.id}`}
                 className="hover:text-olive-dark transition-colors tracking-wide"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToHash(`#${link.id}`);
+                }}
               >
                 {link.label}
               </a>
